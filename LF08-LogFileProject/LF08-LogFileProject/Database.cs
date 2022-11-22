@@ -28,26 +28,17 @@ public class Database
 
        StringBuilder query = new StringBuilder(@"
                         CREATE TABLE logs
-                        (
-                            id      INTEGER     not null
-                                primary key autoincrement
-                                unique,
-                            ip      varchar(15) not null,
-                            date    INTEGER     not null,
-                            method  varchar(20) not null,
-                            address TEXT        not null
-                        );
-
-                        CREATE TABLE attributes
-                        (
-                            id        INTEGER not null
-                                primary key autoincrement
-                                unique,
-                            log_id    INTEGER not null
-                                constraint logs___fk
-                                    references logs,
-                            attribute INTEGER not null
-                        );");
+                            (
+                                id        INTEGER     not null
+                                    constraint logs_pk
+                                        primary key autoincrement,
+                                ip        varchar(15) not null,
+                                date      INTEGER     not null,
+                                method    varchar(20) not null,
+                                address   TEXT        not null,
+                                code      INTEGER     not null,
+                                attribute INTEGER
+                            );");
        
        var command = new SQLiteCommand(query.ToString(), Connection);
        command.ExecuteNonQuery();

@@ -4,8 +4,8 @@ public class Filter
 {
     public DateTime? Start { get; set; }
     public DateTime? End { get; set; }
-    public string? Ip { get; set; }
-    public string[]? Attribute { get; set; }
-    public string[]? Method { get; set; }
-    public string[]? Errors { get; set; }
+    public string[]? Ips { get; set; }
+    public string[]? Attributes { get; set; }
+    public string[]? Methods { get; set; }
+    public string[]? Code { get; set; }
 }

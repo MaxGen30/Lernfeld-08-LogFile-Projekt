@@ -1,33 +1,61 @@
 ﻿using System.Data.SQLite;
+using System.Text;
 using LF08_LogFileProject.Models;
 
 namespace LF08_LogFileProject;
 
 public class Database
 {
+    private SQLiteConnection Connection; 
+    
     public Database()
     {
-        CreateNewDatabase();
+        
     }
 
-    public void CreateNewDatabase()
+    public async Task CreateLogFileDb()
     {
+        // TODO Check if Db already exists
+        
         SQLiteConnection.CreateFile("LogDb.sqlite");
+        
+        Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
+    }
 
-        SQLiteConnection m_dbConnection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
-        m_dbConnection.Open();
+    public async Task CreateLogFileTable()
+    {
+       // TODO Check if Table already exists
 
-        string sql = "create table highscores (name varchar(20), score int)";
+       StringBuilder query = new StringBuilder(@"
+                        CREATE TABLE logs
+                        (
+                            id      INTEGER     not null
+                                primary key autoincrement
+                                unique,
+                            ip      varchar(15) not null,
+                            date    INTEGER     not null,
+                            method  varchar(20) not null,
+                            address TEXT        not null
+                        );
 
-        SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-        command.ExecuteNonQuery();
+                        CREATE TABLE attributes
+                        (
+                            id        INTEGER not null
+                                primary key autoincrement
+                                unique,
+                            log_id    INTEGER not null
+                                constraint logs___fk
+                                    references logs,
+                            attribute INTEGER not null
+                        );");
+       
+       var command = new SQLiteCommand(query.ToString(), Connection);
+       command.ExecuteNonQuery();
+    }
 
-        sql = "insert into highscores (name, score) values ('Me', 9001)";
-
-        command = new SQLiteCommand(sql, m_dbConnection);
-        command.ExecuteNonQuery();
-
-        m_dbConnection.Close();
+    public async Task StopConnection()
+    {
+        await Connection.CloseAsync();
     }
 
     /// <summary>
@@ -37,6 +65,20 @@ public class Database
     /// <returns></returns>
     public async Task<List<LogFiles>> GetLogFilesAsync(Filter filter)
     {
+        // TODO Select fertig schreiben
+        var query = new StringBuilder("SELECT");
+
+        var command = new SQLiteCommand();
+        command.Connection = Connection;
+        
+        var statements = CreateFilterStatements(filter, command.Parameters).ToList();
+
+        if (statements.Any())
+        {
+            query.Append(" WHERE ");
+            query.AppendJoin(" AND ", statements);
+        }
+        
         return new List<LogFiles>();
     }
 
@@ -74,39 +116,63 @@ public class Database
     /// creates the separate filter statements needed for the sql query
     /// </summary>
     /// <param name="filter">filter</param>
+    /// <param name="parameters">parameters</param>
     /// <returns>an enumerable of filter statements</returns>
     private IEnumerable<string> CreateFilterStatements(Filter filter, SQLiteParameterCollection parameters)
     {
         if (filter.Start.HasValue)
         {
-            
+            var start = new DateTimeOffset(filter.Start.Value).ToUnixTimeMilliseconds();
+            parameters.AddWithValue("start", start);
+            yield return "date >= @start";
         }
 
         if (filter.End.HasValue)
         {
-            
+            var end = new DateTimeOffset(filter.End.Value).ToUnixTimeMilliseconds();
+            parameters.AddWithValue("end", end);
+            yield return "date <= @end";
         }
 
-        if (filter.Ip != null)
+        if (filter.Ips is { Length: > 0 })
         {
-            
+            var ips = CreateValueList(filter.Ips, parameters);
+            var statement = new StringBuilder("ip in ( ");
+            statement.AppendJoin(" , ", ips);
+            statement.Append(" )");
         }
 
-        if (filter.Attribute is { Length: > 0 })
+        if (filter.Attributes is { Length: > 0 })
         {
-            
+            var attributes = CreateValueList(filter.Attributes, parameters);
+            var statement = new StringBuilder("attribute in ( ");
+            statement.AppendJoin(" , ", attributes);
+            statement.Append(" )");
         }
 
-        if (filter.Method is { Length: > 0 })
+        if (filter.Methods is { Length: > 0 })
         {
-            
+            var methods = CreateValueList(filter.Methods, parameters);
+            var statement = new StringBuilder("method in ( ");
+            statement.AppendJoin(" , ", methods);
+            statement.Append(" )");
         }
 
-        if (filter.Errors is { Length: > 0 })
+        if (filter.Code is { Length: > 0 })
         {
-            
+            var codes = CreateValueList(filter.Code, parameters);
+            var statement = new StringBuilder("code in ( ");
+            statement.AppendJoin(" , ", codes);
+            statement.Append(" )");
         }
-        
-        yield break;
+    }
+
+    private IEnumerable<string> CreateValueList(string[] filter, SQLiteParameterCollection parameters)
+    {
+        for (int i = 0; i < filter.Length; i++)
+        {
+            parameters.AddWithValue($"filter{i}", filter[i]);
+            yield return $"@filter{i}";
+        }   
     }
 }

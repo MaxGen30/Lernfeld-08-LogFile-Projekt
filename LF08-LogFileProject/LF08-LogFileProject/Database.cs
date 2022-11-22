@@ -63,10 +63,10 @@ public class Database
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public async Task<List<LogFiles>> GetLogFilesAsync(Filter filter)
+    public async Task<List<LogFile>> GetLogFilesAsync(Filter filter)
     {
         // TODO Select fertig schreiben
-        var query = new StringBuilder("SELECT");
+        var query = new StringBuilder("SELECT * FROM logs");
 
         var command = new SQLiteCommand();
         command.Connection = Connection;
@@ -78,8 +78,19 @@ public class Database
             query.Append(" WHERE ");
             query.AppendJoin(" AND ", statements);
         }
+
+        command.CommandText = query.ToString();
         
-        return new List<LogFiles>();
+        await using var reader = await command.ExecuteReaderAsync();
+
+        var results = new List<LogFile>();
+        
+        while (await reader.ReadAsync())
+        {
+            results.Append(new LogFile());
+        }
+        
+        return results;
     }
 
     /// <summary>
@@ -87,9 +98,9 @@ public class Database
     /// </summary>
     /// <param name="filter">filter</param>
     /// <returns></returns>
-    public async Task<List<LogFiles>> GetAmountOfAccessesPerIpAsync(Filter filter)
+    public async Task<List<LogFile>> GetAmountOfAccessesPerIpAsync(Filter filter)
     {
-        return new List<LogFiles>();
+        return new List<LogFile>();
     }
 
     /// <summary>
@@ -97,9 +108,9 @@ public class Database
     /// </summary>
     /// <param name="filter">filter</param>
     /// <returns></returns>
-    public async Task<List<LogFiles>> GetAmountOfEntriesPerRequestMethods(Filter filter)
+    public async Task<List<LogFile>> GetAmountOfEntriesPerRequestMethods(Filter filter)
     {
-        return new List<LogFiles>();
+        return new List<LogFile>();
     }
 
     /// <summary>
@@ -107,9 +118,9 @@ public class Database
     /// </summary>
     /// <param name="filter">filter</param>
     /// <returns></returns>
-    public async Task<List<LogFiles>> GetAmountOfEntriesPerErrorCode(Filter filter)
+    public async Task<List<LogFile>> GetAmountOfEntriesPerErrorCode(Filter filter)
     {
-        return new List<LogFiles>();
+        return new List<LogFile>();
     }
 
     /// <summary>

@@ -20,7 +20,7 @@ public class Ip
 
             if (!success || address is < 0 or > 255)
             {
-                throw new InvalidIpValueException($"Address at Position {i} is invalid");
+                throw new InvalidIpValueException($"Address at Position {i+1} is invalid");
             }
 
             _addresses[i] = address;

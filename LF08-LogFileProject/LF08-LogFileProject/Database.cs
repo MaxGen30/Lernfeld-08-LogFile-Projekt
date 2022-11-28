@@ -1,8 +1,10 @@
 ﻿using System.Data.Common;
 using System.Data.SQLite;
+using System.Globalization;
 using System.Reflection;
 using System.Text;
 using LF08_LogFileProject.Models;
+using LF08_LogFileProject.Models.Ips;
 
 namespace LF08_LogFileProject;
 
@@ -17,11 +19,11 @@ public class Database
 
     private void Init()
     {
-        var filePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()!.Location).LocalPath)+ "/LogDb.sqlite";
+        var filePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()!.Location).LocalPath) +
+                       "/LogDb.sqlite";
 
         if (!File.Exists(filePath))
         {
-
             SQLiteConnection.CreateFile("LogDb.sqlite");
             Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
 
@@ -35,7 +37,7 @@ public class Database
 
     private void CreateLogFileTable()
     {
-       var query = new StringBuilder(@"
+        var query = new StringBuilder(@"
                         CREATE TABLE logs
                             (
                                 id        INTEGER     not null
@@ -48,9 +50,9 @@ public class Database
                                 code      INTEGER     not null,
                                 attribute INTEGER
                             );");
-       
-       var command = new SQLiteCommand(query.ToString(), Connection);
-       command.ExecuteNonQuery();
+
+        var command = new SQLiteCommand(query.ToString(), Connection);
+        command.ExecuteNonQuery();
     }
 
     public async Task StopConnection()
@@ -61,18 +63,108 @@ public class Database
     public async Task<InsertResult> Insert()
     {
         var result = new InsertResult();
-        
-        var filePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()!.Location).LocalPath)+ "/log.txt";
 
-        var content = await File.ReadAllTextAsync(filePath);
+        var filePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()!.Location).LocalPath) + "/log.txt";
 
-        var lines = content.Split(Environment.NewLine);
+        var lines = File.ReadLines(filePath);
 
-        for (int i = 0; i < lines.Length; i++)
+        var files = new List<LogFile>();
+        var debug = new List<(int index, int count)>();
+
+        var index = 0;
+        foreach (var line in lines)
         {
-            var valueArray = lines[i].Split(" ");
-            List<string> values = new List<string>(valueArray);
+            var values = line.Split(" ");
+
+            if (values.Length < 9 || values.Length > 10)
+            {
+                // TODO REMOVE
+                debug.Add((index, values.Length));
+            }
+
+            // catch error
+            Ip ip;
+            try
+            {
+                ip = new Ip(values[0]);
+            }
+            catch (Exception e)
+            {
+                result.AddError(index, e);
+                index++;
+                continue;
+            }
+
+            DateTime dateTime;
+            try
+            {
+                var dateString = values[3];
+                var timeString = values[4];
+                dateString = dateString.Replace("[", "");
+                timeString = timeString.Replace("]", "");
+
+                var dateValues = dateString.Split("-");
+                var timeValues = timeString.Split(":");
+
+                // catch errors
+                bool dateSuccess = true;
+                dateSuccess = Int32.TryParse(dateValues[0], out var year);
+                dateSuccess = Int32.TryParse(dateValues[1], out var month);
+                dateSuccess = Int32.TryParse(dateValues[2], out var day);
+
+                bool timeSucess = true;
+                timeSucess = Int32.TryParse(timeValues[0], out var hours);
+                timeSucess = Int32.TryParse(timeValues[1], out var minutes);
+                var milliAndSeconds = timeValues[2].Split(".");
+                timeSucess = Int32.TryParse(milliAndSeconds[0], out var seconds);
+                string millisecondString = "0," + milliAndSeconds[1];
+                timeSucess = double.TryParse(millisecondString, System.Globalization.NumberStyles.Any,
+                    CultureInfo.CurrentCulture, out double milliSecondsPercent);
+                int milliseconds = Convert.ToInt32(milliSecondsPercent * 1000);
+
+                // TODO das hier muss definitiv angepasst werden
+                if (milliseconds >= 1000)
+                {
+                    milliseconds = 999;
+                }
+
+                dateTime = new DateTime(year, month, day, hours, minutes, seconds, milliseconds);
+            }
+            catch (Exception e)
+            {
+                result.AddError(index, e);
+                index++;
+                continue;
+            }
+
+            var method = values[5].Replace("\"", "");
+
+            var address = values[6].Replace("\"", "") + " " + values[7].Replace("\"", "");
+
+            // catch error
+            var codeSuccess = Int32.TryParse(values[8], out var code);
+
+            // catch error
+            int? attribute = null;
+            if (values.Length > 9)
+            {
+                var attributeSuccess = Int32.TryParse(values[9], out var attributeResult);
+                attribute = attributeResult;
+            }
+
+            LogFile log = new LogFile();
+            log.Ip = ip.GetIp();
+            log.Date = dateTime;
+            log.Method = method;
+            log.Address = address;
+            log.Code = code;
+            log.Attribute = attribute;
+
+            files.Add(log);
+            index++;
         }
+
+        // TODO insert files into Database
 
         return result;
     }
@@ -88,7 +180,7 @@ public class Database
 
         var command = new SQLiteCommand();
         command.Connection = Connection;
-        
+
         var statements = CreateFilterStatements(filter, command.Parameters).ToList();
 
         if (statements.Any())
@@ -98,15 +190,15 @@ public class Database
         }
 
         command.CommandText = query.ToString();
-        
+
         await using var reader = await command.ExecuteReaderAsync();
 
         var results = new List<LogFile>();
-        
+
         while (await reader.ReadAsync())
         {
             var logFile = new LogFile();
-            
+
             logFile.Id = reader.GetInt32(0);
             logFile.Ip = reader.GetString(1);
             logFile.Date = new DateTime(reader.GetInt32(2));
@@ -114,10 +206,10 @@ public class Database
             logFile.Address = reader.GetString(4);
             logFile.Code = reader.GetInt32(5);
             logFile.Attribute = GetIntNullable(reader, 6);
-            
+
             results.Add(new LogFile());
         }
-        
+
         return results;
     }
 
@@ -132,7 +224,7 @@ public class Database
 
         var command = new SQLiteCommand();
         command.Connection = Connection;
-        
+
         var statements = CreateFilterStatements(filter, command.Parameters).ToList();
 
         if (statements.Any())
@@ -144,11 +236,11 @@ public class Database
         query.Append(" GROUP BY ip;");
 
         command.CommandText = query.ToString();
-        
+
         await using var reader = await command.ExecuteReaderAsync();
 
         var results = new List<ValueAmounts<string>>();
-        
+
         while (await reader.ReadAsync())
         {
             var value = new ValueAmounts<string>();
@@ -156,7 +248,7 @@ public class Database
             value.Value = reader.GetString(0);
             value.Amount = reader.GetInt32(1);
         }
-        
+
         return results;
     }
 
@@ -171,7 +263,7 @@ public class Database
 
         var command = new SQLiteCommand();
         command.Connection = Connection;
-        
+
         var statements = CreateFilterStatements(filter, command.Parameters).ToList();
 
         if (statements.Any())
@@ -183,11 +275,11 @@ public class Database
         query.Append(" GROUP BY method;");
 
         command.CommandText = query.ToString();
-        
+
         await using var reader = await command.ExecuteReaderAsync();
 
         var results = new List<ValueAmounts<string>>();
-        
+
         while (await reader.ReadAsync())
         {
             var value = new ValueAmounts<string>();
@@ -195,7 +287,7 @@ public class Database
             value.Value = reader.GetString(0);
             value.Amount = reader.GetInt32(1);
         }
-        
+
         return results;
     }
 
@@ -210,7 +302,7 @@ public class Database
 
         var command = new SQLiteCommand();
         command.Connection = Connection;
-        
+
         var statements = CreateFilterStatements(filter, command.Parameters).ToList();
 
         if (statements.Any())
@@ -222,11 +314,11 @@ public class Database
         query.Append(" GROUP BY 'code;");
 
         command.CommandText = query.ToString();
-        
+
         await using var reader = await command.ExecuteReaderAsync();
 
         var results = new List<ValueAmounts<string>>();
-        
+
         while (await reader.ReadAsync())
         {
             var value = new ValueAmounts<string>();
@@ -234,7 +326,7 @@ public class Database
             value.Value = reader.GetInt32(0).ToString();
             value.Amount = reader.GetInt32(1);
         }
-        
+
         return results;
     }
 
@@ -299,7 +391,7 @@ public class Database
         {
             parameters.AddWithValue($"filter{i}", filter[i]);
             yield return $"@filter{i}";
-        }   
+        }
     }
 
     private int? GetIntNullable(DbDataReader reader, int index)

@@ -1,4 +1,6 @@
-﻿using System.Data.SQLite;
+﻿using System.Data.Common;
+using System.Data.SQLite;
+using System.Reflection;
 using System.Text;
 using LF08_LogFileProject.Models;
 
@@ -6,27 +8,34 @@ namespace LF08_LogFileProject;
 
 public class Database
 {
-    private SQLiteConnection Connection; 
-    
+    private SQLiteConnection Connection;
+
     public Database()
     {
-        
+        Init();
     }
 
-    public async Task CreateLogFileDb()
+    private void Init()
     {
-        // TODO Check if Db already exists
-        
-        SQLiteConnection.CreateFile("LogDb.sqlite");
-        
-        Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
+        var filePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()!.Location).LocalPath)+ "/LogDb.sqlite";
+
+        if (!File.Exists(filePath))
+        {
+
+            SQLiteConnection.CreateFile("LogDb.sqlite");
+            Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
+
+            CreateLogFileTable();
+        }
+        else
+        {
+            Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
+        }
     }
 
-    public async Task CreateLogFileTable()
+    private void CreateLogFileTable()
     {
-       // TODO Check if Table already exists
-
-       StringBuilder query = new StringBuilder(@"
+       var query = new StringBuilder(@"
                         CREATE TABLE logs
                             (
                                 id        INTEGER     not null
@@ -49,6 +58,25 @@ public class Database
         await Connection.CloseAsync();
     }
 
+    public async Task<InsertResult> Insert()
+    {
+        var result = new InsertResult();
+        
+        var filePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()!.Location).LocalPath)+ "/log.txt";
+
+        var content = await File.ReadAllTextAsync(filePath);
+
+        var lines = content.Split(Environment.NewLine);
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var valueArray = lines[i].Split(" ");
+            List<string> values = new List<string>(valueArray);
+        }
+
+        return result;
+    }
+
     /// <summary>
     /// Analyse 1
     /// </summary>
@@ -56,8 +84,7 @@ public class Database
     /// <returns></returns>
     public async Task<List<LogFile>> GetLogFilesAsync(Filter filter)
     {
-        // TODO Select fertig schreiben
-        var query = new StringBuilder("SELECT * FROM logs");
+        var query = new StringBuilder("SELECT id, ip, date, method, address, 'code', 'attribute'  FROM logs");
 
         var command = new SQLiteCommand();
         command.Connection = Connection;
@@ -78,7 +105,17 @@ public class Database
         
         while (await reader.ReadAsync())
         {
-            results.Append(new LogFile());
+            var logFile = new LogFile();
+            
+            logFile.Id = reader.GetInt32(0);
+            logFile.Ip = reader.GetString(1);
+            logFile.Date = new DateTime(reader.GetInt32(2));
+            logFile.Method = reader.GetString(3);
+            logFile.Address = reader.GetString(4);
+            logFile.Code = reader.GetInt32(5);
+            logFile.Attribute = GetIntNullable(reader, 6);
+            
+            results.Add(new LogFile());
         }
         
         return results;
@@ -89,9 +126,38 @@ public class Database
     /// </summary>
     /// <param name="filter">filter</param>
     /// <returns></returns>
-    public async Task<List<LogFile>> GetAmountOfAccessesPerIpAsync(Filter filter)
+    public async Task<List<ValueAmounts<string>>> GetAmountOfAccessesPerIpAsync(Filter filter)
     {
-        return new List<LogFile>();
+        var query = new StringBuilder("SELECT ip, COUNT(*) as amount  FROM logs");
+
+        var command = new SQLiteCommand();
+        command.Connection = Connection;
+        
+        var statements = CreateFilterStatements(filter, command.Parameters).ToList();
+
+        if (statements.Any())
+        {
+            query.Append(" WHERE ");
+            query.AppendJoin(" AND ", statements);
+        }
+
+        query.Append(" GROUP BY ip;");
+
+        command.CommandText = query.ToString();
+        
+        await using var reader = await command.ExecuteReaderAsync();
+
+        var results = new List<ValueAmounts<string>>();
+        
+        while (await reader.ReadAsync())
+        {
+            var value = new ValueAmounts<string>();
+
+            value.Value = reader.GetString(0);
+            value.Amount = reader.GetInt32(1);
+        }
+        
+        return results;
     }
 
     /// <summary>
@@ -99,9 +165,38 @@ public class Database
     /// </summary>
     /// <param name="filter">filter</param>
     /// <returns></returns>
-    public async Task<List<LogFile>> GetAmountOfEntriesPerRequestMethods(Filter filter)
+    public async Task<List<ValueAmounts<string>>> GetAmountOfEntriesPerRequestMethods(Filter filter)
     {
-        return new List<LogFile>();
+        var query = new StringBuilder("SELECT method, COUNT(*) as amount  FROM logs");
+
+        var command = new SQLiteCommand();
+        command.Connection = Connection;
+        
+        var statements = CreateFilterStatements(filter, command.Parameters).ToList();
+
+        if (statements.Any())
+        {
+            query.Append(" WHERE ");
+            query.AppendJoin(" AND ", statements);
+        }
+
+        query.Append(" GROUP BY method;");
+
+        command.CommandText = query.ToString();
+        
+        await using var reader = await command.ExecuteReaderAsync();
+
+        var results = new List<ValueAmounts<string>>();
+        
+        while (await reader.ReadAsync())
+        {
+            var value = new ValueAmounts<string>();
+
+            value.Value = reader.GetString(0);
+            value.Amount = reader.GetInt32(1);
+        }
+        
+        return results;
     }
 
     /// <summary>
@@ -109,9 +204,38 @@ public class Database
     /// </summary>
     /// <param name="filter">filter</param>
     /// <returns></returns>
-    public async Task<List<LogFile>> GetAmountOfEntriesPerErrorCode(Filter filter)
+    public async Task<List<ValueAmounts<string>>> GetAmountOfEntriesPerErrorCode(Filter filter)
     {
-        return new List<LogFile>();
+        var query = new StringBuilder("SELECT 'code', COUNT(*) as amount  FROM logs");
+
+        var command = new SQLiteCommand();
+        command.Connection = Connection;
+        
+        var statements = CreateFilterStatements(filter, command.Parameters).ToList();
+
+        if (statements.Any())
+        {
+            query.Append(" WHERE ");
+            query.AppendJoin(" AND ", statements);
+        }
+
+        query.Append(" GROUP BY 'code;");
+
+        command.CommandText = query.ToString();
+        
+        await using var reader = await command.ExecuteReaderAsync();
+
+        var results = new List<ValueAmounts<string>>();
+        
+        while (await reader.ReadAsync())
+        {
+            var value = new ValueAmounts<string>();
+
+            value.Value = reader.GetInt32(0).ToString();
+            value.Amount = reader.GetInt32(1);
+        }
+        
+        return results;
     }
 
     /// <summary>
@@ -176,5 +300,10 @@ public class Database
             parameters.AddWithValue($"filter{i}", filter[i]);
             yield return $"@filter{i}";
         }   
+    }
+
+    private int? GetIntNullable(DbDataReader reader, int index)
+    {
+        return reader.IsDBNull(index) ? null : reader.GetInt32(index);
     }
 }

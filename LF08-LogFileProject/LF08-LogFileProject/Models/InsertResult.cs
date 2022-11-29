@@ -18,4 +18,11 @@ public class InsertResult
         var error = new InsertError(index, exception);
         Errors.Add(error);
     }
+    
+    public void AddError(int index, string message)
+    {
+        Success = false;
+        var error = new InsertError(index, message);
+        Errors.Add(error);
+    }
 }

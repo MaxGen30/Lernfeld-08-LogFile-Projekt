@@ -137,7 +137,12 @@ public class Database
                 continue;
             }
 
-            var method = values[5].Replace("\"", "");
+            var methodString = values[5].Replace("\"", "");
+            Method method = MethodUtils.GetMethod(methodString);
+            if (method == Method.Empty)
+            {
+                // ADD ERROR HERE AND CONTINUE
+            }
 
             var address = values[6].Replace("\"", "") + " " + values[7].Replace("\"", "");
 
@@ -153,7 +158,7 @@ public class Database
             }
 
             LogFile log = new LogFile();
-            log.Ip = ip.GetIp();
+            log.Ip = ip;
             log.Date = dateTime;
             log.Method = method;
             log.Address = address;
@@ -161,10 +166,34 @@ public class Database
             log.Attribute = attribute;
 
             files.Add(log);
+            
+            // add into logs table
+            try
+            {
+                var query = new StringBuilder(@"
+                        INSERT INTO
+                            logs(ip, date, method, address, code, attribute)
+                        VALUES
+                            (@ip, @date, @method, @address, @code, @attribute);");
+
+                var command = new SQLiteCommand(query.ToString(), Connection);
+                command.Parameters.AddWithValue("ip", log.Ip.ToString());
+                command.Parameters.AddWithValue("date", log.Date.ToString());
+                command.Parameters.AddWithValue("method", log.Method);
+                command.Parameters.AddWithValue("address", log.Address);
+                command.Parameters.AddWithValue("code", log.Code);
+                command.Parameters.AddWithValue("attribute", log.Attribute);
+
+                command.ExecuteNonQuery();
+            }
+            catch 
+            {
+                result.AddError(index, "Could not insert into Logs Table");
+            }
+
+
             index++;
         }
-
-        // TODO insert files into Database
 
         return result;
     }
@@ -176,7 +205,7 @@ public class Database
     /// <returns></returns>
     public async Task<List<LogFile>> GetLogFilesAsync(Filter filter)
     {
-        var query = new StringBuilder("SELECT id, ip, date, method, address, 'code', 'attribute'  FROM logs");
+        var query = new StringBuilder("SELECT id, ip, date, method, address, code, attribute  FROM logs");
 
         var command = new SQLiteCommand();
         command.Connection = Connection;
@@ -200,9 +229,9 @@ public class Database
             var logFile = new LogFile();
 
             logFile.Id = reader.GetInt32(0);
-            logFile.Ip = reader.GetString(1);
+            logFile.Ip = GetIp(reader, 1)!;
             logFile.Date = new DateTime(reader.GetInt32(2));
-            logFile.Method = reader.GetString(3);
+            logFile.Method = MethodUtils.GetMethod(reader.GetInt32(3));
             logFile.Address = reader.GetString(4);
             logFile.Code = reader.GetInt32(5);
             logFile.Attribute = GetIntNullable(reader, 6);
@@ -397,5 +426,11 @@ public class Database
     private int? GetIntNullable(DbDataReader reader, int index)
     {
         return reader.IsDBNull(index) ? null : reader.GetInt32(index);
+    }
+
+    private Ip? GetIp(DbDataReader reader, int index)
+    {
+        // ADD MORE PROTECTION HERE
+        return new Ip(reader.GetString(index));
     }
 }

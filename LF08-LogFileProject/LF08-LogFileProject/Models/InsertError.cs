@@ -10,4 +10,10 @@ public class InsertError
         Index = index;
         ExceptionMessage = exception.Message;
     }
+    
+    public InsertError(int index, string message)
+    {
+        Index = index;
+        ExceptionMessage = message;
+    }
 }

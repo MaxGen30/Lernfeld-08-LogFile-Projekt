@@ -31,4 +31,9 @@ public class Ip
     {
         return _addresses[0] + "." + _addresses[1] + "." + _addresses[2] + "." + _addresses[3];
     }
+
+    public string ToString()
+    {
+        return _addresses[0] + "." + _addresses[1] + "." + _addresses[2] + "." + _addresses[3];
+    }
 }

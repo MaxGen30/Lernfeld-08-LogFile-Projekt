@@ -30,3 +30,4 @@ C:\Lernfeld-08-LogFile-Projekt\LF08-LogFileProject\LF08-LogFileProject\obj\Debug
 C:\Lernfeld-08-LogFile-Projekt\LF08-LogFileProject\LF08-LogFileProject\obj\Debug\net6.0-windows\LF08-LogFileProject.pdb
 C:\Lernfeld-08-LogFile-Projekt\LF08-LogFileProject\LF08-LogFileProject\obj\Debug\net6.0-windows\LF08-LogFileProject.genruntimeconfig.cache
 C:\Lernfeld-08-LogFile-Projekt\LF08-LogFileProject\LF08-LogFileProject\obj\Debug\net6.0-windows\ref\LF08-LogFileProject.dll
+C:\Lernfeld-08-LogFile-Projekt\LF08-LogFileProject\LF08-LogFileProject\obj\Debug\net6.0-windows\LF08_LogFileProject.ListLogsControl.resources

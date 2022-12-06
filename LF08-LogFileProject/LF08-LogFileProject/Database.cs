@@ -29,11 +29,9 @@ public class Database
 
             CreateLogFileTable();
         }
-        else
-        {
-            Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
+        Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
+        Connection.Open();
         }
-    }
 
     private void CreateLogFileTable()
     {
@@ -60,13 +58,11 @@ public class Database
         await Connection.CloseAsync();
     }
 
-    public async Task<InsertResult> Insert()
+    public async Task<InsertResult> Insert(string path)
     {
         var result = new InsertResult();
-
-        var filePath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly()!.Location).LocalPath) + "/log.txt";
-
-        var lines = File.ReadLines(filePath);
+        
+        var lines = File.ReadLines(path);
 
         var files = new List<LogFile>();
         var debug = new List<(int index, int count)>();

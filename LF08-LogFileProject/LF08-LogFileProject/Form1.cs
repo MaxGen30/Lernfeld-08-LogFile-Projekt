@@ -9,8 +9,25 @@ public partial class Form1 : Form
         Database = new Database();
     }
 
-    private async void button1_Click(object sender, EventArgs e)
+    private async void ImportLogFiles(object sender, EventArgs e)
     {
-        await Database.Insert();
+        var error = false;
+        var filePath = string.Empty;
+
+        using (OpenFileDialog openFileDialog = new OpenFileDialog())
+        {
+            openFileDialog.Filter = "log files (*.log)|*.log|All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                //Get the path of specified file
+                filePath = openFileDialog.FileName;
+            }
+
+            if (error == false)
+            {
+                await Database.Insert(filePath);
+            }
+        }
     }
 }

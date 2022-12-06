@@ -37,17 +37,19 @@ public class Database
     {
         var query = new StringBuilder(@"
                         CREATE TABLE logs
-                            (
-                                id        INTEGER     not null
-                                    constraint logs_pk
-                                        primary key autoincrement,
-                                ip        varchar(15) not null,
-                                date      INTEGER     not null,
-                                method    varchar(20) not null,
-                                address   TEXT        not null,
-                                code      INTEGER     not null,
-                                attribute INTEGER
-                            );");
+                        (
+                            id        integer     not null
+                                primary key autoincrement
+                                unique,
+                            ip        varchar(15) not null,
+                            date      text        not null,
+                            method    integer     not null,
+                            address   text        not null,
+                            code      integer     not null,
+                            attribute integer,
+                            UNIQUE (ip, date)
+                        );
+");
 
         var command = new SQLiteCommand(query.ToString(), Connection);
         command.ExecuteNonQuery();
@@ -118,7 +120,7 @@ public class Database
                     CultureInfo.CurrentCulture, out double milliSecondsPercent);
                 int milliseconds = Convert.ToInt32(milliSecondsPercent * 1000);
 
-                // TODO das hier muss definitiv angepasst werden
+                // TODO das hier muss definitiv angepasst werden. Maximal 0.999 Sekunden. Kein Runden kein gar nichts nur die ersten 3. 0.987654 => 0.987
                 if (milliseconds >= 1000)
                 {
                     milliseconds = 999;
@@ -174,7 +176,7 @@ public class Database
 
                 var command = new SQLiteCommand(query.ToString(), Connection);
                 command.Parameters.AddWithValue("ip", log.Ip.ToString());
-                command.Parameters.AddWithValue("date", log.Date.ToString());
+                command.Parameters.AddWithValue("date", log.Date);
                 command.Parameters.AddWithValue("method", log.Method);
                 command.Parameters.AddWithValue("address", log.Address);
                 command.Parameters.AddWithValue("code", log.Code);
@@ -185,6 +187,7 @@ public class Database
             catch 
             {
                 result.AddError(index, "Could not insert into Logs Table");
+                continue;
             }
 
 
@@ -226,13 +229,13 @@ public class Database
 
             logFile.Id = reader.GetInt32(0);
             logFile.Ip = GetIp(reader, 1)!;
-            logFile.Date = new DateTime(reader.GetInt32(2));
+            logFile.Date = DateTime.Parse(reader.GetString(2));
             logFile.Method = MethodUtils.GetMethod(reader.GetInt32(3));
             logFile.Address = reader.GetString(4);
             logFile.Code = reader.GetInt32(5);
             logFile.Attribute = GetIntNullable(reader, 6);
 
-            results.Add(new LogFile());
+            results.Add(logFile);
         }
 
         return results;
@@ -272,6 +275,8 @@ public class Database
 
             value.Value = reader.GetString(0);
             value.Amount = reader.GetInt32(1);
+            
+            results.Add(value);
         }
 
         return results;
@@ -311,6 +316,8 @@ public class Database
 
             value.Value = reader.GetString(0);
             value.Amount = reader.GetInt32(1);
+            
+            results.Add(value);
         }
 
         return results;
@@ -350,6 +357,8 @@ public class Database
 
             value.Value = reader.GetInt32(0).ToString();
             value.Amount = reader.GetInt32(1);
+            
+            results.Add(value);
         }
 
         return results;

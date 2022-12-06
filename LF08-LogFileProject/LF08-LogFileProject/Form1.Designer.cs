@@ -38,6 +38,7 @@ partial class Form1
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -122,11 +123,22 @@ partial class Form1
             this.label5.TabIndex = 8;
             this.label5.Text = "Hier stehen die Logs";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1076, 31);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(152, 34);
+            this.button2.TabIndex = 9;
+            this.button2.Text = "Starte Analyse";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.StartAnalysis);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1258, 844);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
@@ -155,4 +167,5 @@ partial class Form1
     private Label label3;
     private Label label4;
     private Label label5;
+    private Button button2;
 }

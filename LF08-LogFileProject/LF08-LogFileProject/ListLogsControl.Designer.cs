@@ -31,27 +31,32 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.ActivateIpRB = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.ActivateTimespanRB = new System.Windows.Forms.RadioButton();
+            this.ActivateAttributeRB = new System.Windows.Forms.RadioButton();
+            this.BeginDTP = new System.Windows.Forms.DateTimePicker();
+            this.EndDTP = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.IpIN1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.IpIN2 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.IpIN3 = new System.Windows.Forms.TextBox();
+            this.IpIN4 = new System.Windows.Forms.TextBox();
+            this.AdressRB = new System.Windows.Forms.RadioButton();
+            this.CodeRB = new System.Windows.Forms.RadioButton();
+            this.ResponseTimeRB = new System.Windows.Forms.RadioButton();
+            this.IpRB = new System.Windows.Forms.RadioButton();
+            this.DateRB = new System.Windows.Forms.RadioButton();
+            this.MethodRB = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(360, 24);
+            this.label3.Location = new System.Drawing.Point(237, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 25);
             this.label3.TabIndex = 2;
@@ -60,7 +65,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(649, 24);
+            this.label4.Location = new System.Drawing.Point(479, 16);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(127, 25);
             this.label4.TabIndex = 3;
@@ -69,22 +74,22 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1035, 24);
+            this.label5.Location = new System.Drawing.Point(885, 16);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 25);
             this.label5.TabIndex = 4;
             this.label5.Text = "Attribut-Filter:";
             // 
-            // radioButton1
+            // ActivateIpRB
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(20, 44);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(53, 29);
-            this.radioButton1.TabIndex = 5;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Ip";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.ActivateIpRB.AutoSize = true;
+            this.ActivateIpRB.Location = new System.Drawing.Point(20, 44);
+            this.ActivateIpRB.Name = "ActivateIpRB";
+            this.ActivateIpRB.Size = new System.Drawing.Size(53, 29);
+            this.ActivateIpRB.TabIndex = 5;
+            this.ActivateIpRB.TabStop = true;
+            this.ActivateIpRB.Text = "Ip";
+            this.ActivateIpRB.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -95,90 +100,87 @@
             this.label6.TabIndex = 6;
             this.label6.Text = "Aktive Filter";
             // 
-            // radioButton2
+            // ActivateTimespanRB
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(20, 79);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(107, 29);
-            this.radioButton2.TabIndex = 7;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Zeitraum";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.ActivateTimespanRB.AutoSize = true;
+            this.ActivateTimespanRB.Location = new System.Drawing.Point(20, 79);
+            this.ActivateTimespanRB.Name = "ActivateTimespanRB";
+            this.ActivateTimespanRB.Size = new System.Drawing.Size(107, 29);
+            this.ActivateTimespanRB.TabIndex = 7;
+            this.ActivateTimespanRB.TabStop = true;
+            this.ActivateTimespanRB.Text = "Zeitraum";
+            this.ActivateTimespanRB.UseVisualStyleBackColor = true;
             // 
-            // radioButton3
+            // ActivateAttributeRB
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(20, 113);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(98, 29);
-            this.radioButton3.TabIndex = 8;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Attribut";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.ActivateAttributeRB.AutoSize = true;
+            this.ActivateAttributeRB.Location = new System.Drawing.Point(20, 113);
+            this.ActivateAttributeRB.Name = "ActivateAttributeRB";
+            this.ActivateAttributeRB.Size = new System.Drawing.Size(98, 29);
+            this.ActivateAttributeRB.TabIndex = 8;
+            this.ActivateAttributeRB.TabStop = true;
+            this.ActivateAttributeRB.Text = "Attribut";
+            this.ActivateAttributeRB.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // BeginDTP
             // 
-            this.textBox1.Location = new System.Drawing.Point(1035, 51);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(150, 31);
-            this.textBox1.TabIndex = 9;
+            this.BeginDTP.CustomFormat = "dd.MM.yyyy hh:mm:ss";
+            this.BeginDTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.BeginDTP.Location = new System.Drawing.Point(479, 44);
+            this.BeginDTP.Name = "BeginDTP";
+            this.BeginDTP.Size = new System.Drawing.Size(300, 31);
+            this.BeginDTP.TabIndex = 10;
             // 
-            // dateTimePicker1
+            // EndDTP
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(649, 52);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(300, 31);
-            this.dateTimePicker1.TabIndex = 10;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(649, 114);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(300, 31);
-            this.dateTimePicker2.TabIndex = 11;
+            this.EndDTP.CustomFormat = "dd.MM.yyyy hh:mm:ss";
+            this.EndDTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EndDTP.Location = new System.Drawing.Point(479, 106);
+            this.EndDTP.Name = "EndDTP";
+            this.EndDTP.Size = new System.Drawing.Size(300, 31);
+            this.EndDTP.TabIndex = 11;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(649, 86);
+            this.label7.Location = new System.Drawing.Point(479, 78);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(35, 25);
             this.label7.TabIndex = 12;
             this.label7.Text = "bis";
             // 
-            // textBox2
+            // IpIN1
             // 
-            this.textBox2.Location = new System.Drawing.Point(360, 54);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(38, 31);
-            this.textBox2.TabIndex = 14;
-            this.textBox2.Text = "255";
+            this.IpIN1.Location = new System.Drawing.Point(237, 46);
+            this.IpIN1.Margin = new System.Windows.Forms.Padding(0);
+            this.IpIN1.Name = "IpIN1";
+            this.IpIN1.Size = new System.Drawing.Size(38, 31);
+            this.IpIN1.TabIndex = 14;
+            this.IpIN1.Text = "255";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(398, 57);
+            this.label8.Location = new System.Drawing.Point(275, 49);
             this.label8.Margin = new System.Windows.Forms.Padding(0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(16, 25);
             this.label8.TabIndex = 15;
             this.label8.Text = ".";
             // 
-            // textBox3
+            // IpIN2
             // 
-            this.textBox3.Location = new System.Drawing.Point(414, 54);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(38, 31);
-            this.textBox3.TabIndex = 16;
-            this.textBox3.Text = "255";
+            this.IpIN2.Location = new System.Drawing.Point(291, 46);
+            this.IpIN2.Margin = new System.Windows.Forms.Padding(0);
+            this.IpIN2.Name = "IpIN2";
+            this.IpIN2.Size = new System.Drawing.Size(38, 31);
+            this.IpIN2.TabIndex = 16;
+            this.IpIN2.Text = "255";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(452, 57);
+            this.label9.Location = new System.Drawing.Point(329, 49);
             this.label9.Margin = new System.Windows.Forms.Padding(0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(16, 25);
@@ -188,50 +190,121 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(506, 57);
+            this.label10.Location = new System.Drawing.Point(383, 49);
             this.label10.Margin = new System.Windows.Forms.Padding(0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(16, 25);
             this.label10.TabIndex = 19;
             this.label10.Text = ".";
             // 
-            // textBox4
+            // IpIN3
             // 
-            this.textBox4.Location = new System.Drawing.Point(468, 54);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(38, 31);
-            this.textBox4.TabIndex = 18;
-            this.textBox4.Text = "255";
+            this.IpIN3.Location = new System.Drawing.Point(345, 46);
+            this.IpIN3.Margin = new System.Windows.Forms.Padding(0);
+            this.IpIN3.Name = "IpIN3";
+            this.IpIN3.Size = new System.Drawing.Size(38, 31);
+            this.IpIN3.TabIndex = 18;
+            this.IpIN3.Text = "255";
             // 
-            // textBox5
+            // IpIN4
             // 
-            this.textBox5.Location = new System.Drawing.Point(522, 54);
-            this.textBox5.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(38, 31);
-            this.textBox5.TabIndex = 20;
-            this.textBox5.Text = "255";
+            this.IpIN4.Location = new System.Drawing.Point(399, 46);
+            this.IpIN4.Margin = new System.Windows.Forms.Padding(0);
+            this.IpIN4.Name = "IpIN4";
+            this.IpIN4.Size = new System.Drawing.Size(38, 31);
+            this.IpIN4.TabIndex = 20;
+            this.IpIN4.Text = "255";
+            // 
+            // AdressRB
+            // 
+            this.AdressRB.AutoSize = true;
+            this.AdressRB.Location = new System.Drawing.Point(1032, 54);
+            this.AdressRB.Name = "AdressRB";
+            this.AdressRB.Size = new System.Drawing.Size(100, 29);
+            this.AdressRB.TabIndex = 21;
+            this.AdressRB.TabStop = true;
+            this.AdressRB.Text = "Adresse";
+            this.AdressRB.UseVisualStyleBackColor = true;
+            // 
+            // CodeRB
+            // 
+            this.CodeRB.AutoSize = true;
+            this.CodeRB.Location = new System.Drawing.Point(1032, 89);
+            this.CodeRB.Name = "CodeRB";
+            this.CodeRB.Size = new System.Drawing.Size(79, 29);
+            this.CodeRB.TabIndex = 22;
+            this.CodeRB.TabStop = true;
+            this.CodeRB.Text = "Code";
+            this.CodeRB.UseVisualStyleBackColor = true;
+            // 
+            // ResponseTimeRB
+            // 
+            this.ResponseTimeRB.AutoSize = true;
+            this.ResponseTimeRB.Location = new System.Drawing.Point(1032, 124);
+            this.ResponseTimeRB.Name = "ResponseTimeRB";
+            this.ResponseTimeRB.Size = new System.Drawing.Size(128, 29);
+            this.ResponseTimeRB.TabIndex = 23;
+            this.ResponseTimeRB.TabStop = true;
+            this.ResponseTimeRB.Text = "Antwortzeit";
+            this.ResponseTimeRB.UseVisualStyleBackColor = true;
+            // 
+            // IpRB
+            // 
+            this.IpRB.AutoSize = true;
+            this.IpRB.Location = new System.Drawing.Point(885, 54);
+            this.IpRB.Name = "IpRB";
+            this.IpRB.Size = new System.Drawing.Size(53, 29);
+            this.IpRB.TabIndex = 21;
+            this.IpRB.TabStop = true;
+            this.IpRB.Text = "Ip";
+            this.IpRB.UseVisualStyleBackColor = true;
+            // 
+            // DateRB
+            // 
+            this.DateRB.AutoSize = true;
+            this.DateRB.Location = new System.Drawing.Point(885, 89);
+            this.DateRB.Name = "DateRB";
+            this.DateRB.Size = new System.Drawing.Size(91, 29);
+            this.DateRB.TabIndex = 22;
+            this.DateRB.TabStop = true;
+            this.DateRB.Text = "Datum";
+            this.DateRB.UseVisualStyleBackColor = true;
+            // 
+            // MethodRB
+            // 
+            this.MethodRB.AutoSize = true;
+            this.MethodRB.Location = new System.Drawing.Point(885, 124);
+            this.MethodRB.Name = "MethodRB";
+            this.MethodRB.Size = new System.Drawing.Size(109, 29);
+            this.MethodRB.TabIndex = 23;
+            this.MethodRB.TabStop = true;
+            this.MethodRB.Text = "Methode";
+            this.MethodRB.UseVisualStyleBackColor = true;
             // 
             // ListLogsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.MethodRB);
+            this.Controls.Add(this.ResponseTimeRB);
+            this.Controls.Add(this.DateRB);
+            this.Controls.Add(this.CodeRB);
+            this.Controls.Add(this.IpRB);
+            this.Controls.Add(this.AdressRB);
+            this.Controls.Add(this.IpIN4);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.IpIN3);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.IpIN2);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.IpIN1);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.radioButton3);
-            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.EndDTP);
+            this.Controls.Add(this.BeginDTP);
+            this.Controls.Add(this.ActivateAttributeRB);
+            this.Controls.Add(this.ActivateTimespanRB);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.ActivateIpRB);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -247,20 +320,25 @@
         private Label label3;
         private Label label4;
         private Label label5;
-        private RadioButton radioButton1;
+        private RadioButton ActivateIpRB;
         private Label label6;
-        private RadioButton radioButton2;
-        private RadioButton radioButton3;
-        private TextBox textBox1;
-        private DateTimePicker dateTimePicker1;
-        private DateTimePicker dateTimePicker2;
+        private RadioButton ActivateTimespanRB;
+        private RadioButton ActivateAttributeRB;
+        private DateTimePicker BeginDTP;
+        private DateTimePicker EndDTP;
         private Label label7;
-        private TextBox textBox2;
+        private TextBox IpIN1;
         private Label label8;
-        private TextBox textBox3;
+        private TextBox IpIN2;
         private Label label9;
         private Label label10;
-        private TextBox textBox4;
-        private TextBox textBox5;
+        private TextBox IpIN3;
+        private TextBox IpIN4;
+        private RadioButton AdressRB;
+        private RadioButton CodeRB;
+        private RadioButton ResponseTimeRB;
+        private RadioButton IpRB;
+        private RadioButton DateRB;
+        private RadioButton MethodRB;
     }
 }

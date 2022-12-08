@@ -10,5 +10,5 @@ public class LogFile
     public Method Method { get; set; }
     public string Address { get; set; }
     public int Code { get; set; }
-    public int? Attribute { get; set; }
+    public int? ResponseTime { get; set; }
 }

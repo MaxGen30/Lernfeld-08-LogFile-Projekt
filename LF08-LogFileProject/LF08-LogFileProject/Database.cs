@@ -161,7 +161,7 @@ public class Database
             log.Method = method;
             log.Address = address;
             log.Code = code;
-            log.Attribute = attribute;
+            log.ResponseTime = attribute;
 
             files.Add(log);
             
@@ -180,7 +180,7 @@ public class Database
                 command.Parameters.AddWithValue("method", log.Method);
                 command.Parameters.AddWithValue("address", log.Address);
                 command.Parameters.AddWithValue("code", log.Code);
-                command.Parameters.AddWithValue("attribute", log.Attribute);
+                command.Parameters.AddWithValue("attribute", log.ResponseTime);
 
                 command.ExecuteNonQuery();
             }
@@ -204,7 +204,7 @@ public class Database
     /// <returns></returns>
     public async Task<List<LogFile>> GetLogFilesAsync(Filter filter)
     {
-        var query = new StringBuilder("SELECT id, ip, date, method, address, code, attribute  FROM logs");
+        var query = new StringBuilder("SELECT id, ip, date, method, address, code, response_time  FROM logs");
 
         var command = new SQLiteCommand();
         command.Connection = Connection;
@@ -233,7 +233,7 @@ public class Database
             logFile.Method = MethodUtils.GetMethod(reader.GetInt32(3));
             logFile.Address = reader.GetString(4);
             logFile.Code = reader.GetInt32(5);
-            logFile.Attribute = GetIntNullable(reader, 6);
+            logFile.ResponseTime = GetIntNullable(reader, 6);
 
             results.Add(logFile);
         }
@@ -391,14 +391,6 @@ public class Database
             var ips = CreateValueList(filter.Ips, parameters);
             var statement = new StringBuilder("ip in ( ");
             statement.AppendJoin(" , ", ips);
-            statement.Append(" )");
-        }
-
-        if (filter.Attributes is { Length: > 0 })
-        {
-            var attributes = CreateValueList(filter.Attributes, parameters);
-            var statement = new StringBuilder("attribute in ( ");
-            statement.AppendJoin(" , ", attributes);
             statement.Append(" )");
         }
 

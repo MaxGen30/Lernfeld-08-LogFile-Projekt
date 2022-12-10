@@ -21,6 +21,21 @@ public static class MethodUtils
         };
     }
 
+    public static string GetMethodAsString(Method method)
+    {
+        switch (method)
+        {
+            case Method.Get:
+                return "get";
+            case Method.Head:
+                return "head";
+            case Method.Post:
+                return "post";
+            default:
+                return "";
+        }
+    }
+
     public static Method GetMethod(int method)
     {
         if(method is >= 0 and <= 3) {

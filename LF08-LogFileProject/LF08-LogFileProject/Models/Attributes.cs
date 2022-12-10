@@ -2,10 +2,11 @@
 
 public enum Attributes
 {
-    Ip = 0,
-    Address = 1,
-    Date = 2,
-    Code = 3,
-    Method = 4,
-    ResponseTime = 5,
+    Id = 0,
+    Ip = 1,
+    Address = 2,
+    Date = 3,
+    Code = 4,
+    Method = 5,
+    ResponseTime = 6,
 }

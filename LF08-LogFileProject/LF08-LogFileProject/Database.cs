@@ -26,12 +26,16 @@ public class Database
         {
             SQLiteConnection.CreateFile("LogDb.sqlite");
             Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
-
+            Connection.Open();
+            
             CreateLogFileTable();
         }
-        Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
-        Connection.Open();
+        else
+        {
+            Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
+            Connection.Open();
         }
+    }
 
     private void CreateLogFileTable()
     {
@@ -46,7 +50,7 @@ public class Database
                             method    integer     not null,
                             address   text        not null,
                             code      integer     not null,
-                            attribute integer,
+                            response_time integer,
                             UNIQUE (ip, date)
                         );
 ");
@@ -170,9 +174,9 @@ public class Database
             {
                 var query = new StringBuilder(@"
                         INSERT INTO
-                            logs(ip, date, method, address, code, attribute)
+                            logs(ip, date, method, address, code, response_time)
                         VALUES
-                            (@ip, @date, @method, @address, @code, @attribute);");
+                            (@ip, @date, @method, @address, @code, @response_time);");
 
                 var command = new SQLiteCommand(query.ToString(), Connection);
                 command.Parameters.AddWithValue("ip", log.Ip.ToString());
@@ -180,7 +184,7 @@ public class Database
                 command.Parameters.AddWithValue("method", log.Method);
                 command.Parameters.AddWithValue("address", log.Address);
                 command.Parameters.AddWithValue("code", log.Code);
-                command.Parameters.AddWithValue("attribute", log.ResponseTime);
+                command.Parameters.AddWithValue("response_time", log.ResponseTime);
 
                 command.ExecuteNonQuery();
             }
@@ -314,7 +318,8 @@ public class Database
         {
             var value = new ValueAmounts<string>();
 
-            value.Value = reader.GetString(0);
+            var method = MethodUtils.GetMethod(reader.GetInt32(0));
+            value.Value = MethodUtils.GetMethodAsString(method);
             value.Amount = reader.GetInt32(1);
             
             results.Add(value);
@@ -372,6 +377,11 @@ public class Database
     /// <returns>an enumerable of filter statements</returns>
     private IEnumerable<string> CreateFilterStatements(Filter filter, SQLiteParameterCollection parameters)
     {
+        if (!filter.UseFilter)
+        {
+            yield break;
+        }
+        
         if (filter.Start.HasValue)
         {
             var start = new DateTimeOffset(filter.Start.Value).ToUnixTimeMilliseconds();
@@ -386,37 +396,51 @@ public class Database
             yield return "date <= @end";
         }
 
-        if (filter.Ips is { Length: > 0 })
+        if (filter.Ips is { Count: > 0 })
         {
             var ips = CreateValueList(filter.Ips, parameters);
             var statement = new StringBuilder("ip in ( ");
             statement.AppendJoin(" , ", ips);
             statement.Append(" )");
+            yield return statement.ToString();
         }
 
-        if (filter.Methods is { Length: > 0 })
+        if (filter.FilterMethods)
         {
             var methods = CreateValueList(filter.Methods, parameters);
             var statement = new StringBuilder("method in ( ");
             statement.AppendJoin(" , ", methods);
             statement.Append(" )");
+            yield return statement.ToString();
         }
 
-        if (filter.Code is { Length: > 0 })
+        if (filter.FilterCodes)
         {
-            var codes = CreateValueList(filter.Code, parameters);
+            var codes = CreateValueList(filter.Codes, parameters);
             var statement = new StringBuilder("code in ( ");
             statement.AppendJoin(" , ", codes);
             statement.Append(" )");
+            yield return statement.ToString();
         }
     }
 
-    private IEnumerable<string> CreateValueList(string[] filter, SQLiteParameterCollection parameters)
+    private IEnumerable<string> CreateValueList<T>(List<T> values, SQLiteParameterCollection parameters)
     {
-        for (int i = 0; i < filter.Length; i++)
+        foreach (var value in values)
         {
-            parameters.AddWithValue($"filter{i}", filter[i]);
-            yield return $"@filter{i}";
+            var index = parameters.Count;
+            parameters.AddWithValue($"filter{index}", value);
+            yield return $"@filter{index}";
+        }
+    }
+    
+    private IEnumerable<string> CreateValueList(List<Ip> values, SQLiteParameterCollection parameters)
+    {
+        foreach (var value in values)
+        {
+            var index = parameters.Count;
+            parameters.AddWithValue($"filter{index}", value.ToString());
+            yield return $"@filter{index}";
         }
     }
 

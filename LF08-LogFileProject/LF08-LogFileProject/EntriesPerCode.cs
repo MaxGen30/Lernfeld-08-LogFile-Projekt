@@ -1,32 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using LF08_LogFileProject.Models;
+﻿using LF08_LogFileProject.Models;
 using LF08_LogFileProject.Models.Ips;
 
 namespace LF08_LogFileProject
 {
-    public partial class ListLogsControl : UserControl
+    public partial class EntriesPerCode : UserControl
     {
         List<Ip> Ips = new List<Ip>();
+        private List<int> Codes = new List<int>();
 
-        public ListLogsControl()
+        public EntriesPerCode()
         {
             InitializeComponent();
         }
-
+        
         public Errors InitializeFilter(Filter filter)
         {
             filter.ShowAllAttributes = true;
             filter.UseFilter = true;
             
-            if (!ActivateIpCB.Checked && !ActivateTimespanCB.Checked && !ActivateAttributeCB.Checked)
+            if (!ActivateIpCB.Checked && !ActivateTimespanCB.Checked && !ActivateCodeCB.Checked)
             {
                 filter.UseFilter = false;
                 return Errors.NoError;
@@ -62,52 +54,55 @@ namespace LF08_LogFileProject
                 filter.End = end;
             }
 
-            if (ActivateAttributeCB.Checked)
+            if (ActivateCodeCB.Checked)
             {
-                List<Attributes> attributes = new List<Attributes>();
-                filter.ShowAllAttributes = false;
+                filter.FilterCodes = true;
+                if (!Codes.Any())
+                {
+                    return Errors.NoCodes;
+                }
                 
-                if (IdCB.Checked)
+                var codeList = new List<int>();
+                foreach (var code in Codes)
                 {
-                    attributes.Add(Attributes.Id);
+                    codeList.Add(code);
                 }
-
-                if (IpCB.Checked)
-                {
-                    attributes.Add(Attributes.Ip);
-                }
-
-                if (AdressCB.Checked)
-                {
-                    attributes.Add(Attributes.Address);
-                }
-
-                if (DateCB.Checked)
-                {
-                    attributes.Add(Attributes.Date);
-                }
-
-                if (CodeCB.Checked)
-                {
-                    attributes.Add(Attributes.Code);
-                }
-
-                if (MethodCB.Checked)
-                {
-                    attributes.Add(Attributes.Method);
-                }
-
-                if (ResponseTimeCB.Checked)
-                {
-                    attributes.Add(Attributes.ResponseTime);
-                }
-
-                filter.Attributes = attributes;
+                filter.Codes = codeList;
             }
 
             return Errors.NoError;
         }
 
+        private void IpB_Click(object sender, EventArgs e)
+        {
+            Ip? ip = CreateIp();
+
+            if(ip != null)
+            {
+                Ips.Add(ip);
+            } else
+            {
+                // TODO display Error
+            }
+
+            DisplayIps();
+        }
+
+        private void deleteAllB_Click(object sender, EventArgs e)
+        {
+            Ips = new List<Ip>();
+
+            DisplayIps();
+        }
+
+        private void deleteIpB_Click(object sender, EventArgs e)
+        {
+            var index = IpLB.SelectedIndex;
+            Ips.RemoveAt(index);
+
+            DisplayIps();
+        }
+        
         private Ip? CreateIp()
         {
             var ip1String = IpIN1.Text;
@@ -130,37 +125,7 @@ namespace LF08_LogFileProject
                 return null;
             }
         }
-
-        private void IpB_Click(object sender, EventArgs e)
-        {
-            Ip? ip = CreateIp();
-
-            if(ip != null)
-            {
-                Ips.Add(ip);
-            } else
-            {
-                // TODO display Error
-            }
-
-            DisplayIps();
-        }
-
-        private void deleteIpB_Click(object sender, EventArgs e)
-        {
-            var index = IpLB.SelectedIndex;
-            Ips.RemoveAt(index);
-
-            DisplayIps();
-        }
-
-        private void deleteAllB_Click(object sender, EventArgs e)
-        {
-            Ips = new List<Ip>();
-
-            DisplayIps();
-        }
-
+        
         private void DisplayIps()
         {
             IpLB.Items.Clear();
@@ -168,6 +133,47 @@ namespace LF08_LogFileProject
             foreach (var ip in Ips)
             {
                 IpLB.Items.Add(ip);
+            }
+        }
+
+        private void addCodeB_Click(object sender, EventArgs e)
+        {
+            Ip? ip = CreateIp();
+
+            if (ip != null)
+            {
+                Ips.Add(ip);
+            }
+            else
+            {
+                // TODO display Error
+            }
+
+            DisplayCodes();
+        }
+
+        private void deleteAllCodesB_Click(object sender, EventArgs e)
+        {
+            Codes = new List<int>();
+
+            DisplayCodes();
+        }
+
+        private void deleteCodeB_Click(object sender, EventArgs e)
+        {
+            var index = CodeLB.SelectedIndex;
+            Codes.RemoveAt(index);
+
+            DisplayCodes();
+        }
+
+        private void DisplayCodes()
+        {
+            CodeLB.Items.Clear();
+
+            foreach (var code in Codes)
+            {
+                CodeLB.Items.Add(code.ToString());
             }
         }
     }

@@ -31,10 +31,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.ActivateIpRB = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
-            this.ActivateTimespanRB = new System.Windows.Forms.RadioButton();
-            this.ActivateAttributeRB = new System.Windows.Forms.RadioButton();
             this.BeginDTP = new System.Windows.Forms.DateTimePicker();
             this.EndDTP = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
@@ -45,18 +42,26 @@
             this.label10 = new System.Windows.Forms.Label();
             this.IpIN3 = new System.Windows.Forms.TextBox();
             this.IpIN4 = new System.Windows.Forms.TextBox();
-            this.AdressRB = new System.Windows.Forms.RadioButton();
-            this.CodeRB = new System.Windows.Forms.RadioButton();
-            this.ResponseTimeRB = new System.Windows.Forms.RadioButton();
-            this.IpRB = new System.Windows.Forms.RadioButton();
-            this.DateRB = new System.Windows.Forms.RadioButton();
-            this.MethodRB = new System.Windows.Forms.RadioButton();
+            this.IpLB = new System.Windows.Forms.ListBox();
+            this.IpB = new System.Windows.Forms.Button();
+            this.deleteAllB = new System.Windows.Forms.Button();
+            this.deleteIpB = new System.Windows.Forms.Button();
+            this.ActivateIpCB = new System.Windows.Forms.CheckBox();
+            this.ActivateTimespanCB = new System.Windows.Forms.CheckBox();
+            this.ActivateAttributeCB = new System.Windows.Forms.CheckBox();
+            this.IpCB = new System.Windows.Forms.CheckBox();
+            this.DateCB = new System.Windows.Forms.CheckBox();
+            this.MethodCB = new System.Windows.Forms.CheckBox();
+            this.AdressCB = new System.Windows.Forms.CheckBox();
+            this.CodeCB = new System.Windows.Forms.CheckBox();
+            this.ResponseTimeCB = new System.Windows.Forms.CheckBox();
+            this.IdCB = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(237, 16);
+            this.label3.Location = new System.Drawing.Point(165, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 25);
             this.label3.TabIndex = 2;
@@ -74,22 +79,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(885, 16);
+            this.label5.Location = new System.Drawing.Point(884, 16);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 25);
             this.label5.TabIndex = 4;
             this.label5.Text = "Attribut-Filter:";
-            // 
-            // ActivateIpRB
-            // 
-            this.ActivateIpRB.AutoSize = true;
-            this.ActivateIpRB.Location = new System.Drawing.Point(20, 44);
-            this.ActivateIpRB.Name = "ActivateIpRB";
-            this.ActivateIpRB.Size = new System.Drawing.Size(53, 29);
-            this.ActivateIpRB.TabIndex = 5;
-            this.ActivateIpRB.TabStop = true;
-            this.ActivateIpRB.Text = "Ip";
-            this.ActivateIpRB.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -99,28 +93,6 @@
             this.label6.Size = new System.Drawing.Size(104, 25);
             this.label6.TabIndex = 6;
             this.label6.Text = "Aktive Filter";
-            // 
-            // ActivateTimespanRB
-            // 
-            this.ActivateTimespanRB.AutoSize = true;
-            this.ActivateTimespanRB.Location = new System.Drawing.Point(20, 79);
-            this.ActivateTimespanRB.Name = "ActivateTimespanRB";
-            this.ActivateTimespanRB.Size = new System.Drawing.Size(107, 29);
-            this.ActivateTimespanRB.TabIndex = 7;
-            this.ActivateTimespanRB.TabStop = true;
-            this.ActivateTimespanRB.Text = "Zeitraum";
-            this.ActivateTimespanRB.UseVisualStyleBackColor = true;
-            // 
-            // ActivateAttributeRB
-            // 
-            this.ActivateAttributeRB.AutoSize = true;
-            this.ActivateAttributeRB.Location = new System.Drawing.Point(20, 113);
-            this.ActivateAttributeRB.Name = "ActivateAttributeRB";
-            this.ActivateAttributeRB.Size = new System.Drawing.Size(98, 29);
-            this.ActivateAttributeRB.TabIndex = 8;
-            this.ActivateAttributeRB.TabStop = true;
-            this.ActivateAttributeRB.Text = "Attribut";
-            this.ActivateAttributeRB.UseVisualStyleBackColor = true;
             // 
             // BeginDTP
             // 
@@ -151,17 +123,17 @@
             // 
             // IpIN1
             // 
-            this.IpIN1.Location = new System.Drawing.Point(237, 46);
+            this.IpIN1.Location = new System.Drawing.Point(165, 46);
             this.IpIN1.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN1.Name = "IpIN1";
             this.IpIN1.Size = new System.Drawing.Size(38, 31);
             this.IpIN1.TabIndex = 14;
-            this.IpIN1.Text = "255";
+            this.IpIN1.Text = "193";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(275, 49);
+            this.label8.Location = new System.Drawing.Point(203, 49);
             this.label8.Margin = new System.Windows.Forms.Padding(0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(16, 25);
@@ -170,17 +142,17 @@
             // 
             // IpIN2
             // 
-            this.IpIN2.Location = new System.Drawing.Point(291, 46);
+            this.IpIN2.Location = new System.Drawing.Point(219, 46);
             this.IpIN2.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN2.Name = "IpIN2";
             this.IpIN2.Size = new System.Drawing.Size(38, 31);
             this.IpIN2.TabIndex = 16;
-            this.IpIN2.Text = "255";
+            this.IpIN2.Text = "32";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(329, 49);
+            this.label9.Location = new System.Drawing.Point(257, 49);
             this.label9.Margin = new System.Windows.Forms.Padding(0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(16, 25);
@@ -190,7 +162,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(383, 49);
+            this.label10.Location = new System.Drawing.Point(311, 49);
             this.label10.Margin = new System.Windows.Forms.Padding(0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(16, 25);
@@ -199,98 +171,179 @@
             // 
             // IpIN3
             // 
-            this.IpIN3.Location = new System.Drawing.Point(345, 46);
+            this.IpIN3.Location = new System.Drawing.Point(273, 46);
             this.IpIN3.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN3.Name = "IpIN3";
             this.IpIN3.Size = new System.Drawing.Size(38, 31);
             this.IpIN3.TabIndex = 18;
-            this.IpIN3.Text = "255";
+            this.IpIN3.Text = "243";
             // 
             // IpIN4
             // 
-            this.IpIN4.Location = new System.Drawing.Point(399, 46);
+            this.IpIN4.Location = new System.Drawing.Point(327, 46);
             this.IpIN4.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN4.Name = "IpIN4";
             this.IpIN4.Size = new System.Drawing.Size(38, 31);
             this.IpIN4.TabIndex = 20;
-            this.IpIN4.Text = "255";
+            this.IpIN4.Text = "1";
             // 
-            // AdressRB
+            // IpLB
             // 
-            this.AdressRB.AutoSize = true;
-            this.AdressRB.Location = new System.Drawing.Point(1032, 54);
-            this.AdressRB.Name = "AdressRB";
-            this.AdressRB.Size = new System.Drawing.Size(100, 29);
-            this.AdressRB.TabIndex = 21;
-            this.AdressRB.TabStop = true;
-            this.AdressRB.Text = "Adresse";
-            this.AdressRB.UseVisualStyleBackColor = true;
+            this.IpLB.FormattingEnabled = true;
+            this.IpLB.ItemHeight = 25;
+            this.IpLB.Location = new System.Drawing.Point(165, 89);
+            this.IpLB.Name = "IpLB";
+            this.IpLB.Size = new System.Drawing.Size(276, 154);
+            this.IpLB.TabIndex = 24;
             // 
-            // CodeRB
+            // IpB
             // 
-            this.CodeRB.AutoSize = true;
-            this.CodeRB.Location = new System.Drawing.Point(1032, 89);
-            this.CodeRB.Name = "CodeRB";
-            this.CodeRB.Size = new System.Drawing.Size(79, 29);
-            this.CodeRB.TabIndex = 22;
-            this.CodeRB.TabStop = true;
-            this.CodeRB.Text = "Code";
-            this.CodeRB.UseVisualStyleBackColor = true;
+            this.IpB.Location = new System.Drawing.Point(394, 44);
+            this.IpB.Name = "IpB";
+            this.IpB.Size = new System.Drawing.Size(47, 34);
+            this.IpB.TabIndex = 25;
+            this.IpB.Text = "+";
+            this.IpB.UseVisualStyleBackColor = true;
+            this.IpB.Click += new System.EventHandler(this.IpB_Click);
             // 
-            // ResponseTimeRB
+            // deleteAllB
             // 
-            this.ResponseTimeRB.AutoSize = true;
-            this.ResponseTimeRB.Location = new System.Drawing.Point(1032, 124);
-            this.ResponseTimeRB.Name = "ResponseTimeRB";
-            this.ResponseTimeRB.Size = new System.Drawing.Size(128, 29);
-            this.ResponseTimeRB.TabIndex = 23;
-            this.ResponseTimeRB.TabStop = true;
-            this.ResponseTimeRB.Text = "Antwortzeit";
-            this.ResponseTimeRB.UseVisualStyleBackColor = true;
+            this.deleteAllB.Location = new System.Drawing.Point(165, 249);
+            this.deleteAllB.Name = "deleteAllB";
+            this.deleteAllB.Size = new System.Drawing.Size(146, 34);
+            this.deleteAllB.TabIndex = 26;
+            this.deleteAllB.Text = "alle Ips löschen";
+            this.deleteAllB.UseVisualStyleBackColor = true;
+            this.deleteAllB.Click += new System.EventHandler(this.deleteAllB_Click);
             // 
-            // IpRB
+            // deleteIpB
             // 
-            this.IpRB.AutoSize = true;
-            this.IpRB.Location = new System.Drawing.Point(885, 54);
-            this.IpRB.Name = "IpRB";
-            this.IpRB.Size = new System.Drawing.Size(53, 29);
-            this.IpRB.TabIndex = 21;
-            this.IpRB.TabStop = true;
-            this.IpRB.Text = "Ip";
-            this.IpRB.UseVisualStyleBackColor = true;
+            this.deleteIpB.Location = new System.Drawing.Point(317, 249);
+            this.deleteIpB.Name = "deleteIpB";
+            this.deleteIpB.Size = new System.Drawing.Size(124, 34);
+            this.deleteIpB.TabIndex = 27;
+            this.deleteIpB.Text = "Ip löschen";
+            this.deleteIpB.UseVisualStyleBackColor = true;
+            this.deleteIpB.Click += new System.EventHandler(this.deleteIpB_Click);
             // 
-            // DateRB
+            // ActivateIpCB
             // 
-            this.DateRB.AutoSize = true;
-            this.DateRB.Location = new System.Drawing.Point(885, 89);
-            this.DateRB.Name = "DateRB";
-            this.DateRB.Size = new System.Drawing.Size(91, 29);
-            this.DateRB.TabIndex = 22;
-            this.DateRB.TabStop = true;
-            this.DateRB.Text = "Datum";
-            this.DateRB.UseVisualStyleBackColor = true;
+            this.ActivateIpCB.AutoSize = true;
+            this.ActivateIpCB.Location = new System.Drawing.Point(20, 48);
+            this.ActivateIpCB.Name = "ActivateIpCB";
+            this.ActivateIpCB.Size = new System.Drawing.Size(54, 29);
+            this.ActivateIpCB.TabIndex = 28;
+            this.ActivateIpCB.Text = "Ip";
+            this.ActivateIpCB.UseVisualStyleBackColor = true;
             // 
-            // MethodRB
+            // ActivateTimespanCB
             // 
-            this.MethodRB.AutoSize = true;
-            this.MethodRB.Location = new System.Drawing.Point(885, 124);
-            this.MethodRB.Name = "MethodRB";
-            this.MethodRB.Size = new System.Drawing.Size(109, 29);
-            this.MethodRB.TabIndex = 23;
-            this.MethodRB.TabStop = true;
-            this.MethodRB.Text = "Methode";
-            this.MethodRB.UseVisualStyleBackColor = true;
+            this.ActivateTimespanCB.AutoSize = true;
+            this.ActivateTimespanCB.Location = new System.Drawing.Point(20, 83);
+            this.ActivateTimespanCB.Name = "ActivateTimespanCB";
+            this.ActivateTimespanCB.Size = new System.Drawing.Size(108, 29);
+            this.ActivateTimespanCB.TabIndex = 29;
+            this.ActivateTimespanCB.Text = "Zeitraum";
+            this.ActivateTimespanCB.UseVisualStyleBackColor = true;
+            // 
+            // ActivateAttributeCB
+            // 
+            this.ActivateAttributeCB.AutoSize = true;
+            this.ActivateAttributeCB.Location = new System.Drawing.Point(20, 118);
+            this.ActivateAttributeCB.Name = "ActivateAttributeCB";
+            this.ActivateAttributeCB.Size = new System.Drawing.Size(99, 29);
+            this.ActivateAttributeCB.TabIndex = 30;
+            this.ActivateAttributeCB.Text = "Attribut";
+            this.ActivateAttributeCB.UseVisualStyleBackColor = true;
+            // 
+            // IpCB
+            // 
+            this.IpCB.AutoSize = true;
+            this.IpCB.Location = new System.Drawing.Point(884, 83);
+            this.IpCB.Name = "IpCB";
+            this.IpCB.Size = new System.Drawing.Size(54, 29);
+            this.IpCB.TabIndex = 31;
+            this.IpCB.Text = "Ip";
+            this.IpCB.UseVisualStyleBackColor = true;
+            // 
+            // DateCB
+            // 
+            this.DateCB.AutoSize = true;
+            this.DateCB.Location = new System.Drawing.Point(884, 118);
+            this.DateCB.Name = "DateCB";
+            this.DateCB.Size = new System.Drawing.Size(92, 29);
+            this.DateCB.TabIndex = 32;
+            this.DateCB.Text = "Datum";
+            this.DateCB.UseVisualStyleBackColor = true;
+            // 
+            // MethodCB
+            // 
+            this.MethodCB.AutoSize = true;
+            this.MethodCB.Location = new System.Drawing.Point(884, 153);
+            this.MethodCB.Name = "MethodCB";
+            this.MethodCB.Size = new System.Drawing.Size(110, 29);
+            this.MethodCB.TabIndex = 33;
+            this.MethodCB.Text = "Methode";
+            this.MethodCB.UseVisualStyleBackColor = true;
+            // 
+            // AdressCB
+            // 
+            this.AdressCB.AutoSize = true;
+            this.AdressCB.Location = new System.Drawing.Point(1027, 48);
+            this.AdressCB.Name = "AdressCB";
+            this.AdressCB.Size = new System.Drawing.Size(112, 29);
+            this.AdressCB.TabIndex = 34;
+            this.AdressCB.Text = "Addresse";
+            this.AdressCB.UseVisualStyleBackColor = true;
+            // 
+            // CodeCB
+            // 
+            this.CodeCB.AutoSize = true;
+            this.CodeCB.Location = new System.Drawing.Point(1027, 83);
+            this.CodeCB.Name = "CodeCB";
+            this.CodeCB.Size = new System.Drawing.Size(80, 29);
+            this.CodeCB.TabIndex = 35;
+            this.CodeCB.Text = "Code";
+            this.CodeCB.UseVisualStyleBackColor = true;
+            // 
+            // ResponseTimeCB
+            // 
+            this.ResponseTimeCB.AutoSize = true;
+            this.ResponseTimeCB.Location = new System.Drawing.Point(1027, 118);
+            this.ResponseTimeCB.Name = "ResponseTimeCB";
+            this.ResponseTimeCB.Size = new System.Drawing.Size(129, 29);
+            this.ResponseTimeCB.TabIndex = 36;
+            this.ResponseTimeCB.Text = "Antwortzeit";
+            this.ResponseTimeCB.UseVisualStyleBackColor = true;
+            // 
+            // IdCB
+            // 
+            this.IdCB.AutoSize = true;
+            this.IdCB.Location = new System.Drawing.Point(884, 48);
+            this.IdCB.Name = "IdCB";
+            this.IdCB.Size = new System.Drawing.Size(54, 29);
+            this.IdCB.TabIndex = 37;
+            this.IdCB.Text = "Id";
+            this.IdCB.UseVisualStyleBackColor = true;
             // 
             // ListLogsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.MethodRB);
-            this.Controls.Add(this.ResponseTimeRB);
-            this.Controls.Add(this.DateRB);
-            this.Controls.Add(this.CodeRB);
-            this.Controls.Add(this.IpRB);
-            this.Controls.Add(this.AdressRB);
+            this.Controls.Add(this.IdCB);
+            this.Controls.Add(this.ResponseTimeCB);
+            this.Controls.Add(this.CodeCB);
+            this.Controls.Add(this.AdressCB);
+            this.Controls.Add(this.MethodCB);
+            this.Controls.Add(this.DateCB);
+            this.Controls.Add(this.IpCB);
+            this.Controls.Add(this.ActivateAttributeCB);
+            this.Controls.Add(this.ActivateTimespanCB);
+            this.Controls.Add(this.ActivateIpCB);
+            this.Controls.Add(this.deleteIpB);
+            this.Controls.Add(this.deleteAllB);
+            this.Controls.Add(this.IpB);
+            this.Controls.Add(this.IpLB);
             this.Controls.Add(this.IpIN4);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.IpIN3);
@@ -301,16 +354,13 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.EndDTP);
             this.Controls.Add(this.BeginDTP);
-            this.Controls.Add(this.ActivateAttributeRB);
-            this.Controls.Add(this.ActivateTimespanRB);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.ActivateIpRB);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "ListLogsControl";
-            this.Size = new System.Drawing.Size(1260, 170);
+            this.Size = new System.Drawing.Size(1260, 294);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -320,10 +370,7 @@
         private Label label3;
         private Label label4;
         private Label label5;
-        private RadioButton ActivateIpRB;
         private Label label6;
-        private RadioButton ActivateTimespanRB;
-        private RadioButton ActivateAttributeRB;
         private DateTimePicker BeginDTP;
         private DateTimePicker EndDTP;
         private Label label7;
@@ -334,11 +381,19 @@
         private Label label10;
         private TextBox IpIN3;
         private TextBox IpIN4;
-        private RadioButton AdressRB;
-        private RadioButton CodeRB;
-        private RadioButton ResponseTimeRB;
-        private RadioButton IpRB;
-        private RadioButton DateRB;
-        private RadioButton MethodRB;
+        private ListBox IpLB;
+        private Button IpB;
+        private Button deleteAllB;
+        private Button deleteIpB;
+        private CheckBox ActivateIpCB;
+        private CheckBox ActivateTimespanCB;
+        private CheckBox ActivateAttributeCB;
+        private CheckBox IpCB;
+        private CheckBox DateCB;
+        private CheckBox MethodCB;
+        private CheckBox AdressCB;
+        private CheckBox CodeCB;
+        private CheckBox ResponseTimeCB;
+        private CheckBox IdCB;
     }
 }

@@ -29,32 +29,35 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.DGV = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.MethodCB = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listLogsControl1 = new LF08_LogFileProject.ListLogsControl();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.SelectMethodB = new System.Windows.Forms.Button();
+            this.entityCommand1 = new System.Data.Entity.Core.EntityClient.EntityCommand();
+            this.accessesPerIpControl1 = new LF08_LogFileProject.AccessesPerIpControl();
+            this.entriesPerMethod1 = new LF08_LogFileProject.EntriesPerMethod();
+            this.entriesPerCode1 = new LF08_LogFileProject.EntriesPerCode();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // DGV
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(26, 247);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.RowTemplate.Height = 33;
-            this.dataGridView1.Size = new System.Drawing.Size(705, 535);
-            this.dataGridView1.TabIndex = 0;
+            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV.Location = new System.Drawing.Point(20, 378);
+            this.DGV.Name = "DGV";
+            this.DGV.RowHeadersWidth = 62;
+            this.DGV.RowTemplate.Height = 33;
+            this.DGV.Size = new System.Drawing.Size(1220, 414);
+            this.DGV.TabIndex = 0;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(561, 798);
+            this.button1.Location = new System.Drawing.Point(1070, 798);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(170, 34);
             this.button1.TabIndex = 1;
@@ -62,13 +65,13 @@ partial class Form1
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.ImportLogFiles);
             // 
-            // comboBox1
+            // MethodCB
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(43, 46);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(182, 33);
-            this.comboBox1.TabIndex = 2;
+            this.MethodCB.FormattingEnabled = true;
+            this.MethodCB.Location = new System.Drawing.Point(43, 37);
+            this.MethodCB.Name = "MethodCB";
+            this.MethodCB.Size = new System.Drawing.Size(300, 33);
+            this.MethodCB.TabIndex = 2;
             // 
             // label1
             // 
@@ -81,16 +84,17 @@ partial class Form1
             // 
             // listLogsControl1
             // 
-            this.listLogsControl1.Location = new System.Drawing.Point(26, 82);
+            this.listLogsControl1.Location = new System.Drawing.Point(10, 75);
             this.listLogsControl1.Margin = new System.Windows.Forms.Padding(0);
             this.listLogsControl1.Name = "listLogsControl1";
-            this.listLogsControl1.Size = new System.Drawing.Size(1202, 162);
+            this.listLogsControl1.Size = new System.Drawing.Size(1230, 300);
             this.listLogsControl1.TabIndex = 4;
+            this.listLogsControl1.Visible = false;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(311, 49);
+            this.label2.Location = new System.Drawing.Point(491, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(420, 25);
             this.label2.TabIndex = 6;
@@ -99,29 +103,11 @@ partial class Form1
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(308, 21);
+            this.label3.Location = new System.Drawing.Point(491, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(118, 25);
             this.label3.TabIndex = 5;
             this.label3.Text = "Beschreibung";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(784, 483);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(260, 25);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Hier kommen die Log-Infos hin";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(266, 483);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(173, 25);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Hier stehen die Logs";
             // 
             // button2
             // 
@@ -133,24 +119,71 @@ partial class Form1
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.StartAnalysis);
             // 
+            // SelectMethodB
+            // 
+            this.SelectMethodB.Location = new System.Drawing.Point(349, 37);
+            this.SelectMethodB.Name = "SelectMethodB";
+            this.SelectMethodB.Size = new System.Drawing.Size(112, 34);
+            this.SelectMethodB.TabIndex = 10;
+            this.SelectMethodB.Text = "Auswählen";
+            this.SelectMethodB.UseVisualStyleBackColor = true;
+            this.SelectMethodB.Click += new System.EventHandler(this.SelectMethodB_Click);
+            // 
+            // entityCommand1
+            // 
+            this.entityCommand1.CommandTimeout = 0;
+            this.entityCommand1.CommandTree = null;
+            this.entityCommand1.Connection = null;
+            this.entityCommand1.EnablePlanCaching = true;
+            this.entityCommand1.Transaction = null;
+            // 
+            // accessesPerIpControl1
+            // 
+            this.accessesPerIpControl1.Location = new System.Drawing.Point(12, 75);
+            this.accessesPerIpControl1.Name = "accessesPerIpControl1";
+            this.accessesPerIpControl1.Padding = new System.Windows.Forms.Padding(6);
+            this.accessesPerIpControl1.Size = new System.Drawing.Size(1220, 300);
+            this.accessesPerIpControl1.TabIndex = 11;
+            this.accessesPerIpControl1.Visible = false;
+            // 
+            // entriesPerMethod1
+            // 
+            this.entriesPerMethod1.Location = new System.Drawing.Point(20, 77);
+            this.entriesPerMethod1.Name = "entriesPerMethod1";
+            this.entriesPerMethod1.Padding = new System.Windows.Forms.Padding(10);
+            this.entriesPerMethod1.Size = new System.Drawing.Size(1220, 300);
+            this.entriesPerMethod1.TabIndex = 12;
+            this.entriesPerMethod1.Visible = false;
+            // 
+            // entriesPerCode1
+            // 
+            this.entriesPerCode1.Location = new System.Drawing.Point(20, 77);
+            this.entriesPerCode1.Name = "entriesPerCode1";
+            this.entriesPerCode1.Padding = new System.Windows.Forms.Padding(10);
+            this.entriesPerCode1.Size = new System.Drawing.Size(1220, 300);
+            this.entriesPerCode1.TabIndex = 13;
+            this.entriesPerCode1.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1258, 844);
+            this.Controls.Add(this.entriesPerCode1);
+            this.Controls.Add(this.entriesPerMethod1);
+            this.Controls.Add(this.accessesPerIpControl1);
+            this.Controls.Add(this.SelectMethodB);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.listLogsControl1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.MethodCB);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.DGV);
             this.Name = "Form1";
             this.Text = "Log-File-Analyser von Lina, Lisa und Max";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,14 +191,17 @@ partial class Form1
 
     #endregion
 
-    private DataGridView dataGridView1;
+    private DataGridView DGV;
     private Button button1;
-    private ComboBox comboBox1;
+    private ComboBox MethodCB;
     private Label label1;
     private ListLogsControl listLogsControl1;
     private Label label2;
     private Label label3;
-    private Label label4;
-    private Label label5;
     private Button button2;
+    private Button SelectMethodB;
+    private System.Data.Entity.Core.EntityClient.EntityCommand entityCommand1;
+    private AccessesPerIpControl accessesPerIpControl1;
+    private EntriesPerMethod entriesPerMethod1;
+    private EntriesPerCode entriesPerCode1;
 }

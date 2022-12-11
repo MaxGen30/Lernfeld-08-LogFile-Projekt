@@ -49,14 +49,14 @@
             this.deleteAllCodesB = new System.Windows.Forms.Button();
             this.deleteCodeB = new System.Windows.Forms.Button();
             this.addCodeB = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.codeB = new System.Windows.Forms.NumericUpDown();
             this.EndTP = new System.Windows.Forms.DateTimePicker();
             this.BeginTP = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.EndDP = new System.Windows.Forms.DateTimePicker();
             this.BeginDP = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.codeB)).BeginInit();
             this.SuspendLayout();
             // 
             // ActivateCodeCB
@@ -272,23 +272,23 @@
             this.addCodeB.UseVisualStyleBackColor = true;
             this.addCodeB.Click += new System.EventHandler(this.addCodeB_Click);
             // 
-            // numericUpDown1
+            // codeB
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(182, 33);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.codeB.Location = new System.Drawing.Point(182, 33);
+            this.codeB.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.codeB.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(85, 31);
-            this.numericUpDown1.TabIndex = 103;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.codeB.Name = "codeB";
+            this.codeB.Size = new System.Drawing.Size(85, 31);
+            this.codeB.TabIndex = 103;
+            this.codeB.Value = new decimal(new int[] {
             404,
             0,
             0,
@@ -296,7 +296,7 @@
             // 
             // EndTP
             // 
-            this.EndTP.CustomFormat = "hh:mm:ss";
+            this.EndTP.CustomFormat = "HH:mm:ss";
             this.EndTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EndTP.Location = new System.Drawing.Point(986, 93);
             this.EndTP.Name = "EndTP";
@@ -305,7 +305,7 @@
             // 
             // BeginTP
             // 
-            this.BeginTP.CustomFormat = "hh:mm:ss";
+            this.BeginTP.CustomFormat = "HH:mm:ss";
             this.BeginTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.BeginTP.Location = new System.Drawing.Point(984, 31);
             this.BeginTP.Name = "BeginTP";
@@ -360,7 +360,7 @@
             this.Controls.Add(this.EndDP);
             this.Controls.Add(this.BeginDP);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.codeB);
             this.Controls.Add(this.addCodeB);
             this.Controls.Add(this.deleteCodeB);
             this.Controls.Add(this.deleteAllCodesB);
@@ -385,7 +385,7 @@
             this.Name = "EntriesPerCode";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Size = new System.Drawing.Size(1234, 270);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.codeB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -414,7 +414,7 @@
         private Button deleteAllCodesB;
         private Button deleteCodeB;
         private Button addCodeB;
-        private NumericUpDown numericUpDown1;
+        private NumericUpDown codeB;
         private DateTimePicker EndTP;
         private DateTimePicker BeginTP;
         private Label label7;

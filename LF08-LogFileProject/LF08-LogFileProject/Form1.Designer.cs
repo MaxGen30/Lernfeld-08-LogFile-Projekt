@@ -42,6 +42,8 @@ partial class Form1
             this.entriesPerMethod1 = new LF08_LogFileProject.EntriesPerMethod();
             this.entriesPerCode1 = new LF08_LogFileProject.EntriesPerCode();
             this.simpleError1 = new LF08_LogFileProject.SimpleError();
+            this.totalEntriesL = new System.Windows.Forms.Label();
+            this.listError1 = new LF08_LogFileProject.ListError();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -170,11 +172,33 @@ partial class Form1
             this.simpleError1.TabIndex = 14;
             this.simpleError1.Visible = false;
             // 
+            // totalEntriesL
+            // 
+            this.totalEntriesL.AutoSize = true;
+            this.totalEntriesL.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.totalEntriesL.Location = new System.Drawing.Point(12, 799);
+            this.totalEntriesL.Name = "totalEntriesL";
+            this.totalEntriesL.Size = new System.Drawing.Size(243, 30);
+            this.totalEntriesL.TabIndex = 15;
+            this.totalEntriesL.Text = "Insgesamt: 100 Einträge";
+            // 
+            // listError1
+            // 
+            this.listError1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.listError1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listError1.Location = new System.Drawing.Point(311, 42);
+            this.listError1.Name = "listError1";
+            this.listError1.Size = new System.Drawing.Size(600, 750);
+            this.listError1.TabIndex = 16;
+            this.listError1.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1258, 844);
+            this.Controls.Add(this.listError1);
+            this.Controls.Add(this.totalEntriesL);
             this.Controls.Add(this.simpleError1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.discriptionLabel);
@@ -210,4 +234,6 @@ partial class Form1
     private EntriesPerMethod entriesPerMethod1;
     private EntriesPerCode entriesPerCode1;
     private SimpleError simpleError1;
+    private Label totalEntriesL;
+    private ListError listError1;
 }

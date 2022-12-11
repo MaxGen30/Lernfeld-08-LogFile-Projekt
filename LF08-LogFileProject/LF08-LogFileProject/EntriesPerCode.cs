@@ -100,12 +100,14 @@ namespace LF08_LogFileProject
         {
             Ip? ip = CreateIp();
 
-            if(ip != null)
+            if (ip != null)
             {
                 Ips.Add(ip);
-            } else
+            }
+            else
             {
-                // TODO display Error
+                SE.DisplayError(Errors.InvalidIp);
+                return;
             }
 
             DisplayIps();
@@ -168,15 +170,16 @@ namespace LF08_LogFileProject
 
         private void addCodeB_Click(object sender, EventArgs e)
         {
-            Ip? ip = CreateIp();
+            // CODE CODE CODE!
+            var success = Int32.TryParse(codeB.Value.ToString(), out var code);
 
-            if (ip != null)
+            if (success)
             {
-                Ips.Add(ip);
+                Codes.Add(code);
             }
             else
             {
-                SE.DisplayError(Errors.InvalidIp);
+                SE.DisplayError(Errors.InvalidCode);
                 return;
             }
 
@@ -192,10 +195,17 @@ namespace LF08_LogFileProject
 
         private void deleteCodeB_Click(object sender, EventArgs e)
         {
-            var index = CodeLB.SelectedIndex;
-            Codes.RemoveAt(index);
+            try
+            {
+                var index = CodeLB.SelectedIndex;
+                Codes.RemoveAt(index);
 
-            DisplayCodes();
+                DisplayCodes();
+            }
+            catch (Exception ex)
+            {
+                SE.DisplayError(Errors.DeleteCodeError);
+            }
         }
 
         private void DisplayCodes()

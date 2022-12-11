@@ -52,6 +52,12 @@ namespace LF08_LogFileProject
                 case Errors.NoAttributesSelected:
                     header.Append("Keine Attribute");
                     break;
+                case Errors.InvalidCode:
+                    header.Append("Ungültiger Code");
+                    break;
+                case Errors.DeleteCodeError:
+                    header.Append("Problem beim löschen");
+                    break;
             }
 
             HeaderL.Text = header.ToString();
@@ -88,6 +94,12 @@ namespace LF08_LogFileProject
                     break;
                 case Errors.NoAttributesSelected:
                     info.Append("Wenn sie nach Attributen filtern wollen, so müssen Sie auch welche auswählen.");
+                    break;
+                case Errors.InvalidCode:
+                    info.Append("Der eingegebene Code ist ungültig. Min: 0, Max: 999");
+                    break;
+                case Errors.DeleteCodeError:
+                    info.Append("Es konnte kein Code gelöscht werden. Es wurde keiner ausgewählt.");
                     break;
             }
 

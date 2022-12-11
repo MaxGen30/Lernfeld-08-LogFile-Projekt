@@ -11,10 +11,12 @@ namespace LF08_LogFileProject;
 public class Database
 {
     private SQLiteConnection Connection;
+    private ListError _listError;
 
-    public Database()
+    public Database(ListError listError)
     {
         Init();
+        _listError = listError;
     }
 
     private void Init()
@@ -27,7 +29,7 @@ public class Database
             SQLiteConnection.CreateFile("LogDb.sqlite");
             Connection = new SQLiteConnection("Data Source=LogDb.sqlite;Version=3;");
             Connection.Open();
-            
+
             CreateLogFileTable();
         }
         else
@@ -40,19 +42,20 @@ public class Database
     private void CreateLogFileTable()
     {
         var query = new StringBuilder(@"
-                        CREATE TABLE logs
+                        create table logs
                         (
-                            id        integer     not null
+                            id        INTEGER     not null
                                 primary key autoincrement
                                 unique,
                             ip        varchar(15) not null,
-                            date      text        not null,
-                            method    integer     not null,
-                            address   text        not null,
-                            code      integer     not null,
-                            response_time integer,
-                            UNIQUE (ip, date)
-                        );
+                            date      TEXT        not null,
+                            ticks     integer     not null,
+                            method    INTEGER     not null,
+                            address   TEXT        not null,
+                            code      INTEGER     not null,
+                            response_time INTEGER,
+                            unique (ip, date, ticks)
+                            );
 ");
 
         var command = new SQLiteCommand(query.ToString(), Connection);
@@ -67,21 +70,21 @@ public class Database
     public async Task<InsertResult> Insert(string path)
     {
         var result = new InsertResult();
-        
+
         var lines = File.ReadLines(path);
 
         var files = new List<LogFile>();
-        var debug = new List<(int index, int count)>();
 
         var index = 0;
         foreach (var line in lines)
         {
             var values = line.Split(" ");
 
-            if (values.Length < 9 || values.Length > 10)
+            if (values.Length is < 9 or > 10)
             {
-                // TODO REMOVE
-                debug.Add((index, values.Length));
+                _listError.AddError(index, "Ungültige Menge an Werten");
+                index++;
+                continue;
             }
 
             // catch error
@@ -93,11 +96,13 @@ public class Database
             catch (Exception e)
             {
                 result.AddError(index, e);
+                _listError.AddError(index, "Ungültige Ip");
                 index++;
                 continue;
             }
 
             DateTime dateTime;
+            int ticks;
             try
             {
                 var dateString = values[3];
@@ -109,32 +114,28 @@ public class Database
                 var timeValues = timeString.Split(":");
 
                 // catch errors
-                bool dateSuccess = true;
-                dateSuccess = Int32.TryParse(dateValues[0], out var year);
-                dateSuccess = Int32.TryParse(dateValues[1], out var month);
-                dateSuccess = Int32.TryParse(dateValues[2], out var day);
+                var yearSuccess = Int32.TryParse(dateValues[0], out var year);
+                var monthSuccess = Int32.TryParse(dateValues[1], out var month);
+                var daySuccess = Int32.TryParse(dateValues[2], out var day);
 
                 bool timeSucess = true;
                 timeSucess = Int32.TryParse(timeValues[0], out var hours);
                 timeSucess = Int32.TryParse(timeValues[1], out var minutes);
                 var milliAndSeconds = timeValues[2].Split(".");
                 timeSucess = Int32.TryParse(milliAndSeconds[0], out var seconds);
-                string millisecondString = "0," + milliAndSeconds[1];
-                timeSucess = double.TryParse(millisecondString, System.Globalization.NumberStyles.Any,
-                    CultureInfo.CurrentCulture, out double milliSecondsPercent);
-                int milliseconds = Convert.ToInt32(milliSecondsPercent * 1000);
 
-                // TODO das hier muss definitiv angepasst werden. Maximal 0.999 Sekunden. Kein Runden kein gar nichts nur die ersten 3. 0.987654 => 0.987
-                if (milliseconds >= 1000)
-                {
-                    milliseconds = 999;
-                }
+                var millisecondString = new StringBuilder(milliAndSeconds[1]);
 
-                dateTime = new DateTime(year, month, day, hours, minutes, seconds, milliseconds);
+
+                timeSucess = Int32.TryParse(millisecondString.ToString(0, 3), out int milliSeconds);
+                timeSucess = Int32.TryParse(millisecondString.ToString(3, 3), out ticks);
+
+                dateTime = new DateTime(year, month, day, hours, minutes, seconds, milliSeconds);
             }
             catch (Exception e)
             {
                 result.AddError(index, e);
+                _listError.AddError(index, "Ungültiges Datum");
                 index++;
                 continue;
             }
@@ -143,7 +144,9 @@ public class Database
             Method method = MethodUtils.GetMethod(methodString);
             if (method == Method.Empty)
             {
-                // ADD ERROR HERE AND CONTINUE
+                _listError.AddError(index, "Ungültige Methode");
+                index++;
+                continue;
             }
 
             var address = values[6].Replace("\"", "") + " " + values[7].Replace("\"", "");
@@ -151,17 +154,32 @@ public class Database
             // catch error
             var codeSuccess = Int32.TryParse(values[8], out var code);
 
+            if (!codeSuccess || code < 0 || code > 999)
+            {
+                _listError.AddError(index, "Ungültiger Statuscode");
+                index++;
+                continue;
+            }
+
             // catch error
             int? attribute = null;
             if (values.Length > 9)
             {
                 var attributeSuccess = Int32.TryParse(values[9], out var attributeResult);
+                if (!attributeSuccess && values[9] != "-")
+                {
+                    _listError.AddError(index, "Ungültige Antwortzeit");
+                    index++;
+                    continue;
+                }
+
                 attribute = attributeResult;
             }
 
             LogFile log = new LogFile();
             log.Ip = ip;
             log.Date = dateTime;
+            log.Ticks = ticks;
             log.Method = method;
             log.Address = address;
             log.Code = code;
@@ -172,15 +190,21 @@ public class Database
             // add into logs table
             try
             {
+                if (index == 151)
+                {
+                    var a = 1;
+                }
+                
                 var query = new StringBuilder(@"
                         INSERT INTO
-                            logs(ip, date, method, address, code, response_time)
+                            logs(ip, date, ticks, method, address, code, response_time)
                         VALUES
-                            (@ip, @date, @method, @address, @code, @response_time);");
+                            (@ip, @date, @ticks, @method, @address, @code, @response_time);");
 
                 var command = new SQLiteCommand(query.ToString(), Connection);
                 command.Parameters.AddWithValue("ip", log.Ip.ToString());
                 command.Parameters.AddWithValue("date", log.Date);
+                command.Parameters.AddWithValue("ticks", log.Ticks);
                 command.Parameters.AddWithValue("method", log.Method);
                 command.Parameters.AddWithValue("address", log.Address);
                 command.Parameters.AddWithValue("code", log.Code);
@@ -188,9 +212,11 @@ public class Database
 
                 command.ExecuteNonQuery();
             }
-            catch 
+            catch (Exception e)
             {
                 result.AddError(index, "Could not insert into Logs Table");
+                _listError.AddError(index, e.Message);
+                index++;
                 continue;
             }
 
@@ -198,6 +224,7 @@ public class Database
             index++;
         }
 
+        _listError.lastDisplay();
         return result;
     }
 
@@ -279,7 +306,7 @@ public class Database
 
             value.Value = reader.GetString(0);
             value.Amount = reader.GetInt32(1);
-            
+
             results.Add(value);
         }
 
@@ -321,7 +348,7 @@ public class Database
             var method = MethodUtils.GetMethod(reader.GetInt32(0));
             value.Value = MethodUtils.GetMethodAsString(method);
             value.Amount = reader.GetInt32(1);
-            
+
             results.Add(value);
         }
 
@@ -335,7 +362,7 @@ public class Database
     /// <returns></returns>
     public async Task<List<ValueAmounts<string>>> GetAmountOfEntriesPerErrorCode(Filter filter)
     {
-        var query = new StringBuilder("SELECT 'code', COUNT(*) as amount  FROM logs");
+        var query = new StringBuilder("SELECT code, COUNT(*) as amount  FROM logs");
 
         var command = new SQLiteCommand();
         command.Connection = Connection;
@@ -348,7 +375,7 @@ public class Database
             query.AppendJoin(" AND ", statements);
         }
 
-        query.Append(" GROUP BY 'code;");
+        query.Append(" GROUP BY code;");
 
         command.CommandText = query.ToString();
 
@@ -360,9 +387,10 @@ public class Database
         {
             var value = new ValueAmounts<string>();
 
-            value.Value = reader.GetInt32(0).ToString();
+            var code = reader.GetInt32(0);
+            value.Value = code.ToString();
             value.Amount = reader.GetInt32(1);
-            
+
             results.Add(value);
         }
 
@@ -381,7 +409,7 @@ public class Database
         {
             yield break;
         }
-        
+
         if (filter.Start.HasValue)
         {
             var start = new DateTimeOffset(filter.Start.Value).ToUnixTimeMilliseconds();
@@ -433,7 +461,7 @@ public class Database
             yield return $"@filter{index}";
         }
     }
-    
+
     private IEnumerable<string> CreateValueList(List<Ip> values, SQLiteParameterCollection parameters)
     {
         foreach (var value in values)

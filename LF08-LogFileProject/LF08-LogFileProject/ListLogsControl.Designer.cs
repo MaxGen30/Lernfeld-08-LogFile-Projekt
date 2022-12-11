@@ -338,7 +338,7 @@
             // 
             // BeginTP
             // 
-            this.BeginTP.CustomFormat = "hh:mm:ss";
+            this.BeginTP.CustomFormat = "HH:mm:ss";
             this.BeginTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.BeginTP.Location = new System.Drawing.Point(642, 31);
             this.BeginTP.Name = "BeginTP";
@@ -347,7 +347,7 @@
             // 
             // EndTP
             // 
-            this.EndTP.CustomFormat = "hh:mm:ss";
+            this.EndTP.CustomFormat = "HH:mm:ss";
             this.EndTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EndTP.Location = new System.Drawing.Point(642, 93);
             this.EndTP.Name = "EndTP";

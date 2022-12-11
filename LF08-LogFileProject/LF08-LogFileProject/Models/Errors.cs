@@ -12,4 +12,6 @@ public enum Errors
     DeleteIpError,
     InvalidIp,
     NoAttributesSelected,
+    InvalidCode,
+    DeleteCodeError
 }

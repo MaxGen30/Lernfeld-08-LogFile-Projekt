@@ -25,7 +25,7 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
-        Database = new Database();
+        Database = new Database(listError1);
 
         MethodCB.Items.Add(MethodOne);
         MethodCB.Items.Add(MethodTwo);
@@ -40,6 +40,8 @@ public partial class Form1 : Form
         entriesPerMethod1.GiveException(simpleError1);
         entriesPerCode1.GiveException(simpleError1);
         accessesPerIpControl1.GiveException(simpleError1);
+        
+        totalEntriesL.Text = "Insgesamt: - Einträge";
     }
 
     private void MethodCB_SelectedIndexChanged(object sender, EventArgs e)
@@ -91,8 +93,7 @@ public partial class Form1 : Form
 
                 if (error == false)
                 {
-                    var invalidLines = await Database.Insert(filePath);
-                    // TODO display invalid lines
+                    listError1.DisplayDialog(filePath, Database);
                 }
             }
         }
@@ -168,6 +169,7 @@ public partial class Form1 : Form
         DGV.ReadOnly = true;
         DGV.AllowUserToAddRows = false;
         DGV.RowHeadersVisible = false;
+        totalEntriesL.Text = "Insgesamt: - Einträge";
     }
 
     private void DisplayLogFiles(List<LogFile> logs, Filter filter)
@@ -268,7 +270,7 @@ public partial class Form1 : Form
         {
             var id = log.Id.ToString();
             var ip = log.Ip.ToString();
-            var date = log.Date.ToString("yy-MMM-dd hh:mm:ss");
+            var date = log.Date.ToString("yy-MM-dd hh:mm:ss");
             var method = MethodUtils.GetMethodAsString(log.Method);
             var address = log.Address;
             var code = log.Code.ToString();
@@ -285,6 +287,8 @@ public partial class Form1 : Form
 
             DGV.Rows.Add(values.ToArray());
         }
+
+        totalEntriesL.Text = $"Insgesamt: {logs.Count} Einträge";
     }
 
     private void DisplayEntries<T>(List<ValueAmounts<T>> entries, string firstColumn, string secondColumn)
@@ -305,5 +309,7 @@ public partial class Form1 : Form
             var row = new string[]{first, second};
             DGV.Rows.Add(row);
         }
+        
+        totalEntriesL.Text = $"Insgesamt: {entries.Count} Einträge";
     }
 }

@@ -28,10 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label7 = new System.Windows.Forms.Label();
-            this.EndDTP = new System.Windows.Forms.DateTimePicker();
-            this.BeginDTP = new System.Windows.Forms.DateTimePicker();
-            this.label4 = new System.Windows.Forms.Label();
             this.deleteIpB = new System.Windows.Forms.Button();
             this.deleteAllB = new System.Windows.Forms.Button();
             this.IpB = new System.Windows.Forms.Button();
@@ -52,52 +48,17 @@
             this.PostCB = new System.Windows.Forms.CheckBox();
             this.HeadCB = new System.Windows.Forms.CheckBox();
             this.ActivateMethodCB = new System.Windows.Forms.CheckBox();
+            this.EndTP = new System.Windows.Forms.DateTimePicker();
+            this.BeginTP = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.EndDP = new System.Windows.Forms.DateTimePicker();
+            this.BeginDP = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(781, 97);
-            this.label7.Margin = new System.Windows.Forms.Padding(6);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 25);
-            this.label7.TabIndex = 68;
-            this.label7.Text = "bis";
-            // 
-            // EndDTP
-            // 
-            this.EndDTP.CustomFormat = "dd.MM.yyyy hh:mm:ss";
-            this.EndDTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndDTP.Location = new System.Drawing.Point(781, 134);
-            this.EndDTP.Margin = new System.Windows.Forms.Padding(6);
-            this.EndDTP.Name = "EndDTP";
-            this.EndDTP.Size = new System.Drawing.Size(221, 31);
-            this.EndDTP.TabIndex = 67;
-            // 
-            // BeginDTP
-            // 
-            this.BeginDTP.CustomFormat = "dd.MM.yyyy hh:mm:ss";
-            this.BeginDTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.BeginDTP.Location = new System.Drawing.Point(781, 54);
-            this.BeginDTP.Margin = new System.Windows.Forms.Padding(6);
-            this.BeginDTP.Name = "BeginDTP";
-            this.BeginDTP.Size = new System.Drawing.Size(221, 31);
-            this.BeginDTP.TabIndex = 66;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(781, 16);
-            this.label4.Margin = new System.Windows.Forms.Padding(6);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(157, 30);
-            this.label4.TabIndex = 65;
-            this.label4.Text = "Zeitraum-Filter";
             // 
             // deleteIpB
             // 
-            this.deleteIpB.Location = new System.Drawing.Point(616, 255);
+            this.deleteIpB.Location = new System.Drawing.Point(566, 234);
             this.deleteIpB.Margin = new System.Windows.Forms.Padding(6);
             this.deleteIpB.Name = "deleteIpB";
             this.deleteIpB.Size = new System.Drawing.Size(124, 34);
@@ -108,7 +69,7 @@
             // 
             // deleteAllB
             // 
-            this.deleteAllB.Location = new System.Drawing.Point(464, 255);
+            this.deleteAllB.Location = new System.Drawing.Point(414, 234);
             this.deleteAllB.Margin = new System.Windows.Forms.Padding(6);
             this.deleteAllB.Name = "deleteAllB";
             this.deleteAllB.Size = new System.Drawing.Size(146, 34);
@@ -119,7 +80,7 @@
             // 
             // IpB
             // 
-            this.IpB.Location = new System.Drawing.Point(693, 50);
+            this.IpB.Location = new System.Drawing.Point(643, 29);
             this.IpB.Name = "IpB";
             this.IpB.Size = new System.Drawing.Size(47, 34);
             this.IpB.TabIndex = 62;
@@ -131,7 +92,7 @@
             // 
             this.IpLB.FormattingEnabled = true;
             this.IpLB.ItemHeight = 25;
-            this.IpLB.Location = new System.Drawing.Point(464, 89);
+            this.IpLB.Location = new System.Drawing.Point(414, 68);
             this.IpLB.Margin = new System.Windows.Forms.Padding(6);
             this.IpLB.Name = "IpLB";
             this.IpLB.Size = new System.Drawing.Size(276, 154);
@@ -139,17 +100,17 @@
             // 
             // IpIN4
             // 
-            this.IpIN4.Location = new System.Drawing.Point(626, 52);
+            this.IpIN4.Location = new System.Drawing.Point(578, 31);
             this.IpIN4.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN4.Name = "IpIN4";
             this.IpIN4.Size = new System.Drawing.Size(38, 31);
             this.IpIN4.TabIndex = 60;
-            this.IpIN4.Text = "1";
+            this.IpIN4.Text = "255";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(610, 55);
+            this.label10.Location = new System.Drawing.Point(562, 34);
             this.label10.Margin = new System.Windows.Forms.Padding(0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(16, 25);
@@ -158,17 +119,17 @@
             // 
             // IpIN3
             // 
-            this.IpIN3.Location = new System.Drawing.Point(572, 52);
+            this.IpIN3.Location = new System.Drawing.Point(524, 31);
             this.IpIN3.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN3.Name = "IpIN3";
             this.IpIN3.Size = new System.Drawing.Size(38, 31);
             this.IpIN3.TabIndex = 58;
-            this.IpIN3.Text = "243";
+            this.IpIN3.Text = "255";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(556, 55);
+            this.label9.Location = new System.Drawing.Point(508, 34);
             this.label9.Margin = new System.Windows.Forms.Padding(0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(16, 25);
@@ -177,17 +138,17 @@
             // 
             // IpIN2
             // 
-            this.IpIN2.Location = new System.Drawing.Point(518, 52);
+            this.IpIN2.Location = new System.Drawing.Point(470, 31);
             this.IpIN2.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN2.Name = "IpIN2";
             this.IpIN2.Size = new System.Drawing.Size(38, 31);
             this.IpIN2.TabIndex = 56;
-            this.IpIN2.Text = "32";
+            this.IpIN2.Text = "255";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(502, 55);
+            this.label8.Location = new System.Drawing.Point(452, 34);
             this.label8.Margin = new System.Windows.Forms.Padding(0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(16, 25);
@@ -196,19 +157,19 @@
             // 
             // IpIN1
             // 
-            this.IpIN1.Location = new System.Drawing.Point(464, 52);
+            this.IpIN1.Location = new System.Drawing.Point(414, 31);
             this.IpIN1.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN1.Name = "IpIN1";
             this.IpIN1.Size = new System.Drawing.Size(38, 31);
             this.IpIN1.TabIndex = 54;
-            this.IpIN1.Text = "193";
+            this.IpIN1.Text = "255";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(464, 16);
-            this.label3.Margin = new System.Windows.Forms.Padding(6);
+            this.label3.Location = new System.Drawing.Point(414, 0);
+            this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(94, 30);
             this.label3.TabIndex = 53;
@@ -217,8 +178,7 @@
             // ActivateTimespanCB
             // 
             this.ActivateTimespanCB.AutoSize = true;
-            this.ActivateTimespanCB.Location = new System.Drawing.Point(16, 140);
-            this.ActivateTimespanCB.Margin = new System.Windows.Forms.Padding(6);
+            this.ActivateTimespanCB.Location = new System.Drawing.Point(0, 103);
             this.ActivateTimespanCB.Name = "ActivateTimespanCB";
             this.ActivateTimespanCB.Size = new System.Drawing.Size(108, 29);
             this.ActivateTimespanCB.TabIndex = 52;
@@ -228,8 +188,7 @@
             // ActivateIpCB
             // 
             this.ActivateIpCB.AutoSize = true;
-            this.ActivateIpCB.Location = new System.Drawing.Point(16, 99);
-            this.ActivateIpCB.Margin = new System.Windows.Forms.Padding(6);
+            this.ActivateIpCB.Location = new System.Drawing.Point(0, 68);
             this.ActivateIpCB.Name = "ActivateIpCB";
             this.ActivateIpCB.Size = new System.Drawing.Size(54, 29);
             this.ActivateIpCB.TabIndex = 51;
@@ -240,8 +199,8 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(16, 16);
-            this.label6.Margin = new System.Windows.Forms.Padding(6);
+            this.label6.Location = new System.Drawing.Point(0, 0);
+            this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(132, 30);
             this.label6.TabIndex = 50;
@@ -251,8 +210,8 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(211, 16);
-            this.label1.Margin = new System.Windows.Forms.Padding(6);
+            this.label1.Location = new System.Drawing.Point(175, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(176, 30);
             this.label1.TabIndex = 69;
@@ -261,8 +220,7 @@
             // GetCB
             // 
             this.GetCB.AutoSize = true;
-            this.GetCB.Location = new System.Drawing.Point(211, 58);
-            this.GetCB.Margin = new System.Windows.Forms.Padding(6);
+            this.GetCB.Location = new System.Drawing.Point(175, 33);
             this.GetCB.Name = "GetCB";
             this.GetCB.Size = new System.Drawing.Size(65, 29);
             this.GetCB.TabIndex = 70;
@@ -272,8 +230,7 @@
             // PostCB
             // 
             this.PostCB.AutoSize = true;
-            this.PostCB.Location = new System.Drawing.Point(211, 99);
-            this.PostCB.Margin = new System.Windows.Forms.Padding(6);
+            this.PostCB.Location = new System.Drawing.Point(175, 68);
             this.PostCB.Name = "PostCB";
             this.PostCB.Size = new System.Drawing.Size(72, 29);
             this.PostCB.TabIndex = 71;
@@ -283,8 +240,7 @@
             // HeadCB
             // 
             this.HeadCB.AutoSize = true;
-            this.HeadCB.Location = new System.Drawing.Point(211, 140);
-            this.HeadCB.Margin = new System.Windows.Forms.Padding(6);
+            this.HeadCB.Location = new System.Drawing.Point(175, 103);
             this.HeadCB.Name = "HeadCB";
             this.HeadCB.Size = new System.Drawing.Size(80, 29);
             this.HeadCB.TabIndex = 72;
@@ -294,27 +250,84 @@
             // ActivateMethodCB
             // 
             this.ActivateMethodCB.AutoSize = true;
-            this.ActivateMethodCB.Location = new System.Drawing.Point(16, 58);
-            this.ActivateMethodCB.Margin = new System.Windows.Forms.Padding(6);
+            this.ActivateMethodCB.Location = new System.Drawing.Point(0, 33);
             this.ActivateMethodCB.Name = "ActivateMethodCB";
             this.ActivateMethodCB.Size = new System.Drawing.Size(110, 29);
             this.ActivateMethodCB.TabIndex = 73;
             this.ActivateMethodCB.Text = "Methode";
             this.ActivateMethodCB.UseVisualStyleBackColor = true;
             // 
+            // EndTP
+            // 
+            this.EndTP.CustomFormat = "hh:mm:ss";
+            this.EndTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EndTP.Location = new System.Drawing.Point(890, 93);
+            this.EndTP.Name = "EndTP";
+            this.EndTP.Size = new System.Drawing.Size(157, 31);
+            this.EndTP.TabIndex = 79;
+            // 
+            // BeginTP
+            // 
+            this.BeginTP.CustomFormat = "hh:mm:ss";
+            this.BeginTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.BeginTP.Location = new System.Drawing.Point(890, 32);
+            this.BeginTP.Name = "BeginTP";
+            this.BeginTP.Size = new System.Drawing.Size(157, 31);
+            this.BeginTP.TabIndex = 78;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(727, 65);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 25);
+            this.label7.TabIndex = 77;
+            this.label7.Text = "bis";
+            // 
+            // EndDP
+            // 
+            this.EndDP.CustomFormat = "dd.MM.yyyy";
+            this.EndDP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EndDP.Location = new System.Drawing.Point(727, 93);
+            this.EndDP.Name = "EndDP";
+            this.EndDP.Size = new System.Drawing.Size(157, 31);
+            this.EndDP.TabIndex = 76;
+            // 
+            // BeginDP
+            // 
+            this.BeginDP.CustomFormat = "dd.MM.yyyy";
+            this.BeginDP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.BeginDP.Location = new System.Drawing.Point(727, 31);
+            this.BeginDP.Name = "BeginDP";
+            this.BeginDP.Size = new System.Drawing.Size(157, 31);
+            this.BeginDP.TabIndex = 75;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(727, 0);
+            this.label4.Margin = new System.Windows.Forms.Padding(0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(157, 30);
+            this.label4.TabIndex = 74;
+            this.label4.Text = "Zeitraum-Filter";
+            // 
             // EntriesPerMethod
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.EndTP);
+            this.Controls.Add(this.BeginTP);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.EndDP);
+            this.Controls.Add(this.BeginDP);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.ActivateMethodCB);
             this.Controls.Add(this.HeadCB);
             this.Controls.Add(this.PostCB);
             this.Controls.Add(this.GetCB);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.EndDTP);
-            this.Controls.Add(this.BeginDTP);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.deleteIpB);
             this.Controls.Add(this.deleteAllB);
             this.Controls.Add(this.IpB);
@@ -330,20 +343,15 @@
             this.Controls.Add(this.ActivateTimespanCB);
             this.Controls.Add(this.ActivateIpCB);
             this.Controls.Add(this.label6);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "EntriesPerMethod";
-            this.Padding = new System.Windows.Forms.Padding(10);
-            this.Size = new System.Drawing.Size(1220, 300);
+            this.Size = new System.Drawing.Size(1234, 270);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private Label label7;
-        private DateTimePicker EndDTP;
-        private DateTimePicker BeginDTP;
-        private Label label4;
         private Button deleteIpB;
         private Button deleteAllB;
         private Button IpB;
@@ -364,5 +372,11 @@
         private CheckBox PostCB;
         private CheckBox HeadCB;
         private CheckBox ActivateMethodCB;
+        private DateTimePicker EndTP;
+        private DateTimePicker BeginTP;
+        private Label label7;
+        private DateTimePicker EndDP;
+        private DateTimePicker BeginDP;
+        private Label label4;
     }
 }

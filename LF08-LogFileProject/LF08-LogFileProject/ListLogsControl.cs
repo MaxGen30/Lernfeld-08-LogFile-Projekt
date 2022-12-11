@@ -15,17 +15,23 @@ namespace LF08_LogFileProject
     public partial class ListLogsControl : UserControl
     {
         List<Ip> Ips = new List<Ip>();
+        private SimpleError SE;
 
         public ListLogsControl()
         {
             InitializeComponent();
         }
 
+        public void GiveException(SimpleError se)
+        {
+            SE = se;
+        }
+
         public Errors InitializeFilter(Filter filter)
         {
             filter.ShowAllAttributes = true;
             filter.UseFilter = true;
-            
+
             if (!ActivateIpCB.Checked && !ActivateTimespanCB.Checked && !ActivateAttributeCB.Checked)
             {
                 filter.UseFilter = false;
@@ -38,20 +44,38 @@ namespace LF08_LogFileProject
                 {
                     return Errors.NoIps;
                 }
-                
+
                 List<string> ipStrings = new List<string>();
                 foreach (var ip in Ips)
                 {
                     string ipString = ip.ToString();
                     ipStrings.Add(ipString);
                 }
+
                 filter.Ips = ipStrings;
             }
 
             if (ActivateTimespanCB.Checked)
             {
-                var start = BeginDTP.Value;
-                var end = EndDTP.Value;
+                DateTime start;
+                try
+                {
+                    start = BeginDP.Value.Date + BeginTP.Value.TimeOfDay;
+                }
+                catch (Exception e)
+                {
+                    return Errors.InvalidBegin;
+                }
+
+                DateTime end;
+                try
+                {
+                    end = EndDP.Value.Date + EndTP.Value.TimeOfDay;
+                }
+                catch (Exception e)
+                {
+                    return Errors.InvalidEnd;
+                }
 
                 if (start > end)
                 {
@@ -66,43 +90,59 @@ namespace LF08_LogFileProject
             {
                 List<Attributes> attributes = new List<Attributes>();
                 filter.ShowAllAttributes = false;
-                
+
+                var attributesSelected = false;
+
                 if (IdCB.Checked)
                 {
                     attributes.Add(Attributes.Id);
+                    attributesSelected = true;
                 }
 
                 if (IpCB.Checked)
                 {
                     attributes.Add(Attributes.Ip);
+                    attributesSelected = true;
                 }
 
                 if (AdressCB.Checked)
                 {
                     attributes.Add(Attributes.Address);
+                    attributesSelected = true;
                 }
 
                 if (DateCB.Checked)
                 {
                     attributes.Add(Attributes.Date);
+                    attributesSelected = true;
                 }
 
                 if (CodeCB.Checked)
                 {
                     attributes.Add(Attributes.Code);
+                    attributesSelected = true;
                 }
 
                 if (MethodCB.Checked)
                 {
                     attributes.Add(Attributes.Method);
+                    attributesSelected = true;
                 }
 
                 if (ResponseTimeCB.Checked)
                 {
                     attributes.Add(Attributes.ResponseTime);
+                    attributesSelected = true;
                 }
 
-                filter.Attributes = attributes;
+                if (attributesSelected)
+                {
+                    filter.Attributes = attributes;
+                }
+                else
+                {
+                    return Errors.NoAttributesSelected;
+                }
             }
 
             return Errors.NoError;
@@ -135,12 +175,14 @@ namespace LF08_LogFileProject
         {
             Ip? ip = CreateIp();
 
-            if(ip != null)
+            if (ip != null)
             {
                 Ips.Add(ip);
-            } else
+            }
+            else
             {
-                // TODO display Error
+                SE.DisplayError(Errors.InvalidIp);
+                return;
             }
 
             DisplayIps();
@@ -148,10 +190,17 @@ namespace LF08_LogFileProject
 
         private void deleteIpB_Click(object sender, EventArgs e)
         {
-            var index = IpLB.SelectedIndex;
-            Ips.RemoveAt(index);
+            try
+            {
+                var index = IpLB.SelectedIndex;
+                Ips.RemoveAt(index);
 
-            DisplayIps();
+                DisplayIps();
+            }
+            catch (Exception ex)
+            {
+                SE.DisplayError(Errors.DeleteIpError);
+            }
         }
 
         private void deleteAllB_Click(object sender, EventArgs e)

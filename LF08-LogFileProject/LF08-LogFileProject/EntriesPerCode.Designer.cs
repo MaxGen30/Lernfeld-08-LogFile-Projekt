@@ -30,10 +30,6 @@
         {
             this.ActivateCodeCB = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.EndDTP = new System.Windows.Forms.DateTimePicker();
-            this.BeginDTP = new System.Windows.Forms.DateTimePicker();
-            this.label4 = new System.Windows.Forms.Label();
             this.deleteIpB = new System.Windows.Forms.Button();
             this.deleteAllB = new System.Windows.Forms.Button();
             this.IpB = new System.Windows.Forms.Button();
@@ -54,14 +50,19 @@
             this.deleteCodeB = new System.Windows.Forms.Button();
             this.addCodeB = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.EndTP = new System.Windows.Forms.DateTimePicker();
+            this.BeginTP = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.EndDP = new System.Windows.Forms.DateTimePicker();
+            this.BeginDP = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // ActivateCodeCB
             // 
             this.ActivateCodeCB.AutoSize = true;
-            this.ActivateCodeCB.Location = new System.Drawing.Point(16, 58);
-            this.ActivateCodeCB.Margin = new System.Windows.Forms.Padding(6);
+            this.ActivateCodeCB.Location = new System.Drawing.Point(0, 33);
             this.ActivateCodeCB.Name = "ActivateCodeCB";
             this.ActivateCodeCB.Size = new System.Drawing.Size(80, 29);
             this.ActivateCodeCB.TabIndex = 97;
@@ -72,57 +73,16 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(201, 16);
-            this.label1.Margin = new System.Windows.Forms.Padding(6);
+            this.label1.Location = new System.Drawing.Point(182, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 30);
             this.label1.TabIndex = 93;
             this.label1.Text = "Code-Filter:";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(818, 95);
-            this.label7.Margin = new System.Windows.Forms.Padding(6);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 25);
-            this.label7.TabIndex = 92;
-            this.label7.Text = "bis";
-            // 
-            // EndDTP
-            // 
-            this.EndDTP.CustomFormat = "dd.MM.yyyy hh:mm:ss";
-            this.EndDTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.EndDTP.Location = new System.Drawing.Point(818, 132);
-            this.EndDTP.Margin = new System.Windows.Forms.Padding(6);
-            this.EndDTP.Name = "EndDTP";
-            this.EndDTP.Size = new System.Drawing.Size(221, 31);
-            this.EndDTP.TabIndex = 91;
-            // 
-            // BeginDTP
-            // 
-            this.BeginDTP.CustomFormat = "dd.MM.yyyy hh:mm:ss";
-            this.BeginDTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.BeginDTP.Location = new System.Drawing.Point(818, 52);
-            this.BeginDTP.Margin = new System.Windows.Forms.Padding(6);
-            this.BeginDTP.Name = "BeginDTP";
-            this.BeginDTP.Size = new System.Drawing.Size(221, 31);
-            this.BeginDTP.TabIndex = 90;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(818, 14);
-            this.label4.Margin = new System.Windows.Forms.Padding(6);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(157, 30);
-            this.label4.TabIndex = 89;
-            this.label4.Text = "Zeitraum-Filter";
-            // 
             // deleteIpB
             // 
-            this.deleteIpB.Location = new System.Drawing.Point(663, 253);
+            this.deleteIpB.Location = new System.Drawing.Point(661, 236);
             this.deleteIpB.Margin = new System.Windows.Forms.Padding(6);
             this.deleteIpB.Name = "deleteIpB";
             this.deleteIpB.Size = new System.Drawing.Size(124, 34);
@@ -133,7 +93,7 @@
             // 
             // deleteAllB
             // 
-            this.deleteAllB.Location = new System.Drawing.Point(511, 253);
+            this.deleteAllB.Location = new System.Drawing.Point(509, 236);
             this.deleteAllB.Margin = new System.Windows.Forms.Padding(6);
             this.deleteAllB.Name = "deleteAllB";
             this.deleteAllB.Size = new System.Drawing.Size(146, 34);
@@ -144,7 +104,7 @@
             // 
             // IpB
             // 
-            this.IpB.Location = new System.Drawing.Point(740, 48);
+            this.IpB.Location = new System.Drawing.Point(738, 32);
             this.IpB.Name = "IpB";
             this.IpB.Size = new System.Drawing.Size(47, 34);
             this.IpB.TabIndex = 86;
@@ -156,7 +116,7 @@
             // 
             this.IpLB.FormattingEnabled = true;
             this.IpLB.ItemHeight = 25;
-            this.IpLB.Location = new System.Drawing.Point(511, 87);
+            this.IpLB.Location = new System.Drawing.Point(509, 73);
             this.IpLB.Margin = new System.Windows.Forms.Padding(6);
             this.IpLB.Name = "IpLB";
             this.IpLB.Size = new System.Drawing.Size(276, 154);
@@ -164,17 +124,17 @@
             // 
             // IpIN4
             // 
-            this.IpIN4.Location = new System.Drawing.Point(673, 51);
+            this.IpIN4.Location = new System.Drawing.Point(671, 34);
             this.IpIN4.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN4.Name = "IpIN4";
             this.IpIN4.Size = new System.Drawing.Size(38, 31);
             this.IpIN4.TabIndex = 84;
-            this.IpIN4.Text = "1";
+            this.IpIN4.Text = "255";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(657, 53);
+            this.label10.Location = new System.Drawing.Point(655, 37);
             this.label10.Margin = new System.Windows.Forms.Padding(0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(16, 25);
@@ -183,17 +143,17 @@
             // 
             // IpIN3
             // 
-            this.IpIN3.Location = new System.Drawing.Point(619, 50);
+            this.IpIN3.Location = new System.Drawing.Point(617, 34);
             this.IpIN3.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN3.Name = "IpIN3";
             this.IpIN3.Size = new System.Drawing.Size(38, 31);
             this.IpIN3.TabIndex = 82;
-            this.IpIN3.Text = "243";
+            this.IpIN3.Text = "255";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(603, 53);
+            this.label9.Location = new System.Drawing.Point(601, 36);
             this.label9.Margin = new System.Windows.Forms.Padding(0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(16, 25);
@@ -202,17 +162,17 @@
             // 
             // IpIN2
             // 
-            this.IpIN2.Location = new System.Drawing.Point(565, 50);
+            this.IpIN2.Location = new System.Drawing.Point(563, 34);
             this.IpIN2.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN2.Name = "IpIN2";
             this.IpIN2.Size = new System.Drawing.Size(38, 31);
             this.IpIN2.TabIndex = 80;
-            this.IpIN2.Text = "32";
+            this.IpIN2.Text = "255";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(549, 53);
+            this.label8.Location = new System.Drawing.Point(547, 37);
             this.label8.Margin = new System.Windows.Forms.Padding(0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(16, 25);
@@ -221,19 +181,19 @@
             // 
             // IpIN1
             // 
-            this.IpIN1.Location = new System.Drawing.Point(511, 50);
+            this.IpIN1.Location = new System.Drawing.Point(509, 33);
             this.IpIN1.Margin = new System.Windows.Forms.Padding(0);
             this.IpIN1.Name = "IpIN1";
             this.IpIN1.Size = new System.Drawing.Size(38, 31);
             this.IpIN1.TabIndex = 78;
-            this.IpIN1.Text = "193";
+            this.IpIN1.Text = "255";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(511, 14);
-            this.label3.Margin = new System.Windows.Forms.Padding(6);
+            this.label3.Location = new System.Drawing.Point(509, 0);
+            this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(94, 30);
             this.label3.TabIndex = 77;
@@ -242,8 +202,7 @@
             // ActivateTimespanCB
             // 
             this.ActivateTimespanCB.AutoSize = true;
-            this.ActivateTimespanCB.Location = new System.Drawing.Point(16, 140);
-            this.ActivateTimespanCB.Margin = new System.Windows.Forms.Padding(6);
+            this.ActivateTimespanCB.Location = new System.Drawing.Point(0, 103);
             this.ActivateTimespanCB.Name = "ActivateTimespanCB";
             this.ActivateTimespanCB.Size = new System.Drawing.Size(108, 29);
             this.ActivateTimespanCB.TabIndex = 76;
@@ -253,8 +212,7 @@
             // ActivateIpCB
             // 
             this.ActivateIpCB.AutoSize = true;
-            this.ActivateIpCB.Location = new System.Drawing.Point(16, 99);
-            this.ActivateIpCB.Margin = new System.Windows.Forms.Padding(6);
+            this.ActivateIpCB.Location = new System.Drawing.Point(0, 68);
             this.ActivateIpCB.Name = "ActivateIpCB";
             this.ActivateIpCB.Size = new System.Drawing.Size(54, 29);
             this.ActivateIpCB.TabIndex = 75;
@@ -265,8 +223,8 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(16, 16);
-            this.label6.Margin = new System.Windows.Forms.Padding(6);
+            this.label6.Location = new System.Drawing.Point(0, 0);
+            this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(132, 30);
             this.label6.TabIndex = 74;
@@ -276,7 +234,7 @@
             // 
             this.CodeLB.FormattingEnabled = true;
             this.CodeLB.ItemHeight = 25;
-            this.CodeLB.Location = new System.Drawing.Point(201, 87);
+            this.CodeLB.Location = new System.Drawing.Point(182, 73);
             this.CodeLB.Margin = new System.Windows.Forms.Padding(6);
             this.CodeLB.Name = "CodeLB";
             this.CodeLB.Size = new System.Drawing.Size(276, 154);
@@ -284,7 +242,7 @@
             // 
             // deleteAllCodesB
             // 
-            this.deleteAllCodesB.Location = new System.Drawing.Point(201, 253);
+            this.deleteAllCodesB.Location = new System.Drawing.Point(182, 236);
             this.deleteAllCodesB.Margin = new System.Windows.Forms.Padding(6);
             this.deleteAllCodesB.Name = "deleteAllCodesB";
             this.deleteAllCodesB.Size = new System.Drawing.Size(119, 34);
@@ -295,7 +253,7 @@
             // 
             // deleteCodeB
             // 
-            this.deleteCodeB.Location = new System.Drawing.Point(332, 253);
+            this.deleteCodeB.Location = new System.Drawing.Point(313, 236);
             this.deleteCodeB.Margin = new System.Windows.Forms.Padding(6);
             this.deleteCodeB.Name = "deleteCodeB";
             this.deleteCodeB.Size = new System.Drawing.Size(145, 34);
@@ -306,7 +264,7 @@
             // 
             // addCodeB
             // 
-            this.addCodeB.Location = new System.Drawing.Point(430, 48);
+            this.addCodeB.Location = new System.Drawing.Point(411, 30);
             this.addCodeB.Name = "addCodeB";
             this.addCodeB.Size = new System.Drawing.Size(47, 34);
             this.addCodeB.TabIndex = 102;
@@ -316,7 +274,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(201, 51);
+            this.numericUpDown1.Location = new System.Drawing.Point(182, 33);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             999,
             0,
@@ -336,10 +294,72 @@
             0,
             0});
             // 
+            // EndTP
+            // 
+            this.EndTP.CustomFormat = "hh:mm:ss";
+            this.EndTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EndTP.Location = new System.Drawing.Point(986, 93);
+            this.EndTP.Name = "EndTP";
+            this.EndTP.Size = new System.Drawing.Size(157, 31);
+            this.EndTP.TabIndex = 109;
+            // 
+            // BeginTP
+            // 
+            this.BeginTP.CustomFormat = "hh:mm:ss";
+            this.BeginTP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.BeginTP.Location = new System.Drawing.Point(984, 31);
+            this.BeginTP.Name = "BeginTP";
+            this.BeginTP.Size = new System.Drawing.Size(157, 31);
+            this.BeginTP.TabIndex = 108;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(823, 65);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 25);
+            this.label7.TabIndex = 107;
+            this.label7.Text = "bis";
+            // 
+            // EndDP
+            // 
+            this.EndDP.CustomFormat = "dd.MM.yyyy";
+            this.EndDP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EndDP.Location = new System.Drawing.Point(823, 93);
+            this.EndDP.Name = "EndDP";
+            this.EndDP.Size = new System.Drawing.Size(157, 31);
+            this.EndDP.TabIndex = 106;
+            // 
+            // BeginDP
+            // 
+            this.BeginDP.CustomFormat = "dd.MM.yyyy";
+            this.BeginDP.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.BeginDP.Location = new System.Drawing.Point(823, 31);
+            this.BeginDP.Name = "BeginDP";
+            this.BeginDP.Size = new System.Drawing.Size(157, 31);
+            this.BeginDP.TabIndex = 105;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(823, 0);
+            this.label4.Margin = new System.Windows.Forms.Padding(0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(157, 30);
+            this.label4.TabIndex = 104;
+            this.label4.Text = "Zeitraum-Filter";
+            // 
             // EntriesPerCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.EndTP);
+            this.Controls.Add(this.BeginTP);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.EndDP);
+            this.Controls.Add(this.BeginDP);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.addCodeB);
             this.Controls.Add(this.deleteCodeB);
@@ -347,10 +367,6 @@
             this.Controls.Add(this.CodeLB);
             this.Controls.Add(this.ActivateCodeCB);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.EndDTP);
-            this.Controls.Add(this.BeginDTP);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.deleteIpB);
             this.Controls.Add(this.deleteAllB);
             this.Controls.Add(this.IpB);
@@ -368,7 +384,7 @@
             this.Controls.Add(this.label6);
             this.Name = "EntriesPerCode";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Size = new System.Drawing.Size(1220, 300);
+            this.Size = new System.Drawing.Size(1234, 270);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -379,10 +395,6 @@
 
         private CheckBox ActivateCodeCB;
         private Label label1;
-        private Label label7;
-        private DateTimePicker EndDTP;
-        private DateTimePicker BeginDTP;
-        private Label label4;
         private Button deleteIpB;
         private Button deleteAllB;
         private Button IpB;
@@ -403,5 +415,11 @@
         private Button deleteCodeB;
         private Button addCodeB;
         private NumericUpDown numericUpDown1;
+        private DateTimePicker EndTP;
+        private DateTimePicker BeginTP;
+        private Label label7;
+        private DateTimePicker EndDP;
+        private DateTimePicker BeginDP;
+        private Label label4;
     }
 }

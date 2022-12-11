@@ -6,10 +6,16 @@ namespace LF08_LogFileProject
     public partial class AccessesPerIpControl : UserControl
     {
         List<Ip> Ips = new List<Ip>();
+        private SimpleError SE;
 
         public AccessesPerIpControl()
         {
             InitializeComponent();
+        }
+        
+        public void GiveException(SimpleError se)
+        {
+            SE = se;
         }
         
         public Errors InitializeFilter(Filter filter)
@@ -41,8 +47,25 @@ namespace LF08_LogFileProject
 
             if (ActivateTimespanCB.Checked)
             {
-                var start = BeginDTP.Value;
-                var end = EndDTP.Value;
+                DateTime start;
+                try
+                {
+                    start = BeginDP.Value.Date + BeginTP.Value.TimeOfDay;
+                }
+                catch (Exception e)
+                {
+                    return Errors.InvalidBegin;
+                }
+                
+                DateTime end;
+                try
+                {
+                    end = EndDP.Value.Date + EndTP.Value.TimeOfDay;
+                }
+                catch (Exception e)
+                {
+                    return Errors.InvalidEnd;
+                }
 
                 if (start > end)
                 {
@@ -65,7 +88,8 @@ namespace LF08_LogFileProject
                 Ips.Add(ip);
             } else
             {
-                // TODO display Error
+                SE.DisplayError(Errors.InvalidIp);
+                return;
             }
 
             DisplayIps();
@@ -80,10 +104,17 @@ namespace LF08_LogFileProject
 
         private void deleteIpB_Click(object sender, EventArgs e)
         {
-            var index = IpLB.SelectedIndex;
-            Ips.RemoveAt(index);
+            try
+            {
+                var index = IpLB.SelectedIndex;
+                Ips.RemoveAt(index);
 
-            DisplayIps();
+                DisplayIps();
+            }
+            catch (Exception ex)
+            {
+                SE.DisplayError(Errors.DeleteIpError);
+            }
         }
         
         private Ip? CreateIp()

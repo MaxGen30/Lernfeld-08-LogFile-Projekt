@@ -8,9 +8,17 @@ public partial class Form1 : Form
     private Database Database;
 
     private const string MethodOne = "Logs anzeigen";
+    private const string MethodOneDescription = "Listet alle Log-Einträge innerhalb der Datenbank auf";
+    
     private const string MethodTwo = "Zugriffe pro Ip anzeigen";
+    private const string MethodTwoDescription = "Listet die Menge an Zugriffen pro Ip-Adresse auf";
+
     private const string MethodThree = "Einträge pro Methode anzeigen";
+    private const string MethodThreeDescription = "Listet die Menge an Einträgen pro Http-Methode auf";
+
     private const string MethodFour = "Einträge pro Code anzeigen";
+    private const string MethodFourDescription = "Listet die Menge an Einträgen pro Http-Statuscode auf";
+
 
     private int _selectedMethod = 0;
 
@@ -25,28 +33,40 @@ public partial class Form1 : Form
         MethodCB.Items.Add(MethodFour);
 
         MethodCB.Text = MethodOne;
+        discriptionLabel.Text = MethodOneDescription;
         listLogsControl1.Visible = true;
+        
+        listLogsControl1.GiveException(simpleError1);
+        entriesPerMethod1.GiveException(simpleError1);
+        entriesPerCode1.GiveException(simpleError1);
+        accessesPerIpControl1.GiveException(simpleError1);
     }
-    
-    private void SelectMethodB_Click(object sender, EventArgs e)
+
+    private void MethodCB_SelectedIndexChanged(object sender, EventArgs e)
     {
         _selectedMethod = MethodCB.SelectedIndex;
 
         listLogsControl1.Visible = false;
         accessesPerIpControl1.Visible = false;
+        entriesPerCode1.Visible = false;
+        entriesPerMethod1.Visible = false;
 
         switch (_selectedMethod)
         {
             case 0:
+                discriptionLabel.Text = MethodOneDescription;
                 listLogsControl1.Visible = true;
                 break;
             case 1:
+                discriptionLabel.Text = MethodTwoDescription;
                 accessesPerIpControl1.Visible = true;
                 break;
             case 2:
+                discriptionLabel.Text = MethodThreeDescription;
                 entriesPerMethod1.Visible = true;
                 break;
             case 3:
+                discriptionLabel.Text = MethodFourDescription;
                 entriesPerCode1.Visible = true;
                 break;
         }
@@ -57,20 +77,28 @@ public partial class Form1 : Form
         var error = false;
         var filePath = string.Empty;
 
-        using (OpenFileDialog openFileDialog = new OpenFileDialog())
+        try
         {
-            openFileDialog.Filter = "log files (*.log)|*.log|All files (*.*)|*.*";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                //Get the path of specified file
-                filePath = openFileDialog.FileName;
-            }
+                openFileDialog.Filter = "log files (*.log)|*.log|All files (*.*)|*.*";
 
-            if (error == false)
-            {
-                await Database.Insert(filePath);
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+                }
+
+                if (error == false)
+                {
+                    var invalidLines = await Database.Insert(filePath);
+                    // TODO display invalid lines
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            return;
         }
     }
 
@@ -97,7 +125,7 @@ public partial class Form1 : Form
 
         if (error != Errors.NoError)
         {
-            // TODO DISPLAY ERROR
+            simpleError1.DisplayError(error);
             return;
         }
 
@@ -128,7 +156,8 @@ public partial class Form1 : Form
         }
         catch (Exception ex)
         {
-            // TODO Display error
+            simpleError1.DisplayError(Errors.FailedToRead);
+            return;
         }
     }
 

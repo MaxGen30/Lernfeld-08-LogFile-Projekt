@@ -16,5 +16,8 @@
     <Compile Update="ListLogsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="SimpleError.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

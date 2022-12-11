@@ -42,7 +42,7 @@
           "dependencies": {
             "System.Data.SQLite": {
               "target": "Package",
-              "version": "[1.0.116, )"
+              "version": "[1.0.117, )"
             }
           },
           "imports": [
